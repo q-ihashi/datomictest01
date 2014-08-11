@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- scriptタグを追加 [ START ] -->
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">google.load("jquery", "1");</script>
+    <script type="text/javascript">
+      // Definition of greet function
+      function greet(first_name, last_name) {
+        $("#greeting_area").text("** Loading... **");
+        $.ajax({
+          // methodを指定。今回はPOST
+          type: "post",
+          // 取得後のデータの型を指定。これに従ってパースされる。
+          // 現状のcompojure側の返却データの場合はtextをそのまま返しているので、
+          // ここでは"text"を指定する。
+          // "json"とか指定すると、パースエラーになってしまうので注意
+//          dataType: "text",
+          dataType: "json",
+          // POSTデータをJSON形式で生成して送信する。
+          data: {
+            "first_name": first_name,
+            "last_name": last_name
+          },
+          cache: true,
+          // POST先のURLを指定。
+          url: "http://127.0.0.1:3000/post_name",
+          success: function (greet_message) {
+            $("#greeting_area").text(greet_message.value);
+          },
+          error: function(xhr, status, err) {
+            var message = "Error occured: status=" + status + ", err=" + err;
+            $('#greeting_area').html(message);
+          }
+        });
+      }
+      // Initialize
+      $(function(){
+        // Greetボタンにクリックイベントハンドラを追加。
+        $("#greet_button").click(function() {
+          var first_name = $("input[name='first_name']").val();
+          var last_name = $("input[name='last_name']").val();
+          greet(first_name, last_name);
+          // ページ遷移が発生しないよう、submitを抑制する為にfalseを返却。
+          return false;
+        });
+      })
+    </script>
+    <!-- scriptタグを追加 [  END  ] -->
+  </head>
+  <body>
+    <!-- method属性は不要 -->
+    <!-- action属性はHTML5のformタグの使用的に必須なので残すが、-->
+    <!-- ajaxメソッドで通信する場合は使用しない -->
+    <form action="unused">
+      <table>
+        <tr>
+          <td>First Name:</td>
+          <td><input name="first_name" type="text" value="" /></td>
+        </tr>
+        <tr>
+          <td>Last Name:</td>
+          <td><input name="last_name" type="text" value="" /></td>
+        </tr>
+      </table>
+      <div><input id="greet_button" type="submit" value="Greet" /></div>
+    </form>
+    <div id="greeting_area"></div><br/>
+  </body>
+</html>
