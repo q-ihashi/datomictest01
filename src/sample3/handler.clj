@@ -2,6 +2,7 @@
   (:require [compojure.core :refer :all]
             [compojure.handler :as handler]
             [compojure.route :as route]
+            [sample3.meishi :as meishi]
             ;次の２つのS式を追加。カッコのネストに注意。
             ;ring関連で使用する関数のrequire宣言を追加している。
             [ring.util.response :refer [resource-response response]]
@@ -21,22 +22,22 @@
 ;(def dbw (d/db conn))
 
 ; スキーマ定義
-(def s-tx-user-name
-  [{:db/id #db/id[:db.part/db]
-   :db/ident :user/name
-   :db/valueType :db.type/string
-   :db/cardinality :db.cardinality/one
-   :db/doc "A person's name"
-   :db.install/_attribute :db.part/db}]
-  )
+;(def s-tx-user-name
+;  [{:db/id #db/id[:db.part/db]
+;   :db/ident :user/name
+;   :db/valueType :db.type/string
+;   :db/cardinality :db.cardinality/one
+;   :db/doc "A person's name"
+;   :db.install/_attribute :db.part/db}]
+;  )
 
-(def s-tx-user-address
-  [{:db/id #db/id[:db.part/db]
-   :db/ident :user/address
-   :db/valueType :db.type/string
-   :db/cardinality :db.cardinality/one
-   :db.install/_attribute :db.part/db}]
-  )
+;(def s-tx-user-address
+;  [{:db/id #db/id[:db.part/db]
+;   :db/ident :user/address
+;   :db/valueType :db.type/string
+;   :db/cardinality :db.cardinality/one
+;   :db.install/_attribute :db.part/db}]
+;  )
 
 ;(def s-tx-book-name
 ;  {:db/id #db/id[:db.part/db]
@@ -46,13 +47,13 @@
 ;   :db.install/_attribute :db.part/db})
 ;
 ; 定義登録
-(d/transact conn s-tx-user-name)
+;(d/transact conn s-tx-user-name)
 ;@(d/transact conn s-tx-user-address)
 ;@(d/transact conn s-tx-book-name)
 
-(d/transact conn [[:db/add 1 :user/address "kanagawa"]
-                  [:db/add 1 :user/name "taro"]])
-
+;(d/transact conn [[:db/add 1 :user/address "kanagawa"]
+;                  [:db/add 1 :user/name "taro"]])
+;
 
 ;(def results (q '[:find ?e :where [?e :user/name]] (d/db conn)))
 
@@ -68,6 +69,7 @@
   (GET "/datomic-txInstant"  [] (str (q '[:find ?e ?v :where [?e :db/txInstant ?v]] (get-db conn))))
   (GET "/datomicschemaname" [] (str (d/transact conn s-tx-user-name)))
   (GET "/datomicschemaaddr" [] (str (d/transact conn s-tx-user-address)))
+  (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
   (GET "/datomicadd" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]
                   [:db/add #db/id[:db.part/user] :user/name "taro"]])))
   (GET "/datomicadd2" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]
