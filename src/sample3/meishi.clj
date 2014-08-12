@@ -18,7 +18,7 @@
    :db/ident :user/name
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
-   :db/fulltext true
+   :db/fulltext false
    :db/doc \"user name\"
    :db.install/_attribute :db.part/db}
 
@@ -40,7 +40,7 @@
    :db/ident :meishi/title
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
-   :db/fulltext true
+   :db/fulltext false
    :db/doc \"meishi title\"
    :db.install/_attribute :db.part/db}
 
@@ -48,7 +48,7 @@
    :db/ident :meishi/name
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
-   :db/fulltext true
+   :db/fulltext false
    :db/doc \"meishi name\"
    :db.install/_attribute :db.part/db}
 
@@ -56,7 +56,7 @@
    :db/ident :meishi/addr
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
-   :db/fulltext true
+   :db/fulltext false
    :db/doc \"meishi addr\"
    :db.install/_attribute :db.part/db}
 
@@ -64,7 +64,7 @@
    :db/ident :meishi/tel
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
-   :db/fulltext true
+   :db/fulltext false
    :db/doc \"meishi tel\"
    :db.install/_attribute :db.part/db}
 
@@ -72,7 +72,7 @@
    :db/ident :meishi/email
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
-   :db/fulltext true
+   :db/fulltext false
    :db/doc \"meishi email\"
    :db.install/_attribute :db.part/db}
  ]"
