@@ -70,7 +70,7 @@
   (GET "/datomicschemaname" [] (str (d/transact conn s-tx-user-name)))
   (GET "/datomicschemaaddr" [] (str (d/transact conn s-tx-user-address)))
 ;  (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
-  (GET "/datomicschemainit" [] (str (meishi/meishi-schema conn )))
+  (GET "/datomicschemainit" [] (str (map (d/transact conn) meishi/meishi-schema)))
   (GET "/datomicadd" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]
                   [:db/add #db/id[:db.part/user] :user/name "taro"]])))
   (GET "/datomicadd2" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]
