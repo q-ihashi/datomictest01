@@ -12,26 +12,30 @@
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext false
-  :db/doc "loginId"}
+  :db/doc "loginId"
+  :db.install/attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
   :db/ident :user/name
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "user name"}
+  :db/doc "user name"
+  :db.install/attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
   :db/ident :user/myMeishi
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/many
-  :db/doc "myMeishi"}
+  :db/doc "myMeishi"
+  :db.install/attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
   :db/ident :user/hasMeishi
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/many
-  :db/doc "hasMeishi"}
+  :db/doc "hasMeishi"
+  :db.install/attribute :db.part/db}
 
  ; meishi
  {:db/id #db/id[:db.part/db]
@@ -39,35 +43,40 @@
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "meishi title"}
+  :db/doc "meishi title"
+  :db.install/attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
   :db/ident :meishi/name
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "meishi name"}
+  :db/doc "meishi name"
+  :db.install/attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
   :db/ident :meishi/addr
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "meishi addr"}
+  :db/doc "meishi addr"
+  :db.install/attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
   :db/ident :meishi/tel
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "meishi tel"}
+  :db/doc "meishi tel"
+  :db.install/attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
   :db/ident :meishi/email
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "meishi email"}
+  :db/doc "meishi email"
+  :db.install/attribute :db.part/db}
 
  ]
   )
