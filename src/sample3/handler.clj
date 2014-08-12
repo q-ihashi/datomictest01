@@ -58,6 +58,7 @@
 ;(def results (q '[:find ?e :where [?e :user/name]] (d/db conn)))
 
 (defn get-db [cn] (d/db cn))
+(defn tra [sch] (d/transact conn sch))
 
 (defroutes app-routes
   (GET "/" [] "Hello World")
@@ -70,7 +71,7 @@
   (GET "/datomicschemaname" [] (str (d/transact conn s-tx-user-name)))
   (GET "/datomicschemaaddr" [] (str (d/transact conn s-tx-user-address)))
 ;  (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
-  (GET "/datomicschemainit" [] (str (map #(d/transact conn %) meishi/meishi-schema)))
+  (GET "/datomicschemainit" [] (str (map tra meishi/meishi-schema)))
   (GET "/datomicadd" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]
                   [:db/add #db/id[:db.part/user] :user/name "taro"]])))
   (GET "/datomicadd2" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]

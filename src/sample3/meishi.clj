@@ -5,7 +5,7 @@
             ))
 
 (def meishi-schema
- [
+ (
  ;; user
   {:db/id #db/id[:db.part/db]
    :db/ident :user/loginId
@@ -77,5 +77,5 @@
    :db/fulltext true
    :db/doc "meishi email"
    :db.install/_attribute :db.part/db}
- ]
+ )
   )
