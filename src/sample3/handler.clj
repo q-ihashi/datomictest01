@@ -9,7 +9,8 @@
             [datomic.api :as d :refer [db q]]
             ))
 
-(def uri "datomic:free://192.168.0.71:4334/test")
+(def uri "datomic:free://127.0.0.1:4334/test")
+;(def uri "datomic:free://192.168.0.71:4334/test")
 ;(def uri "datomic:free://192.168.0.71:4334/test?h2-port=4335&h2-web-port=4336")
 ;(def uri "datomic:dev://192.168.0.71:4334/test")
 ;(d/create-database "datomic:free://127.0.0.1:4334/test")
