@@ -70,8 +70,8 @@
   (GET "/datomic-txInstant"  [] (str (q '[:find ?e ?v :where [?e :db/txInstant ?v]] (get-db conn))))
   (GET "/datomicschemaname" [] (str (d/transact conn s-tx-user-name)))
   (GET "/datomicschemaaddr" [] (str (d/transact conn s-tx-user-address)))
-;  (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
-  (GET "/datomicschemainit" [] (str (map tra meishi/meishi-schema)))
+  (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
+;  (GET "/datomicschemainit" [] (str (map tra meishi/meishi-schema)))
   (GET "/datomicadd" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]
                   [:db/add #db/id[:db.part/user] :user/name "taro"]])))
   (GET "/datomicadd2" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]
