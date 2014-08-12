@@ -22,22 +22,22 @@
 ;(def dbw (d/db conn))
 
 ; スキーマ定義
-;(def s-tx-user-name
-;  [{:db/id #db/id[:db.part/db]
-;   :db/ident :user/name
-;   :db/valueType :db.type/string
-;   :db/cardinality :db.cardinality/one
-;   :db/doc "A person's name"
-;   :db.install/_attribute :db.part/db}]
-;  )
+(def s-tx-user-name
+  [{:db/id #db/id[:db.part/db]
+   :db/ident :user/name
+   :db/valueType :db.type/string
+   :db/cardinality :db.cardinality/one
+   :db/doc "A person's name"
+   :db.install/_attribute :db.part/db}]
+  )
 
-;(def s-tx-user-address
-;  [{:db/id #db/id[:db.part/db]
-;   :db/ident :user/address
-;   :db/valueType :db.type/string
-;   :db/cardinality :db.cardinality/one
-;   :db.install/_attribute :db.part/db}]
-;  )
+(def s-tx-user-address
+  [{:db/id #db/id[:db.part/db]
+   :db/ident :user/address
+   :db/valueType :db.type/string
+   :db/cardinality :db.cardinality/one
+   :db.install/_attribute :db.part/db}]
+  )
 
 ;(def s-tx-book-name
 ;  {:db/id #db/id[:db.part/db]
