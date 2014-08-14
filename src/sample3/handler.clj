@@ -63,6 +63,7 @@
 (defroutes app-routes
   (GET "/" [] "Hello World")
   (GET "/datomic-name" [] (str (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn))))
+  (GET "/datomic-json-name" [] (str "{[" (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) "]}"))
   (GET "/datomic-addr" [] (str (q '[:find ?e ?v :where [?e :user/address ?v ]] (get-db conn))))
   (GET "/datomic-join" [] (str (q '[:find ?e ?v1 ?v1tx ?v2 ?v2tx :where [?e :user/name ?v1 ?v1tx ][?e :user/address ?v2 ?v2tx ]] (get-db conn))))
   (GET "/datomic-entity"  [] (str (q '[:find ?k ?v ?tx ?added :where [17592186045570 ?k ?v ?tx ?added]] (get-db conn))))
