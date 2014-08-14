@@ -6,6 +6,7 @@
                  ;↓の２つのS式を追加。
                  [ring/ring-core "1.2.2"]
                  [ring/ring-json "0.2.0"]
+                 [org.clojure/data.json "0.2.5"]
                  [com.datomic/datomic-free "0.9.4815.12"
                   :exclusions [... org.clojure/clojure]]
                 ]

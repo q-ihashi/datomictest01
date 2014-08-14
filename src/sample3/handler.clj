@@ -7,6 +7,7 @@
             ;ring関連で使用する関数のrequire宣言を追加している。
             [ring.util.response :refer [resource-response response]]
             [ring.middleware.json :as middleware]
+            [clojure.data.json :as json]
             [datomic.api :as d :refer [db q]]
             ))
 
@@ -64,7 +65,7 @@
   (GET "/" [] "Hello World")
   (GET "/datomic-name" [] (str (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn))))
   (GET "/datomic-json-namebk" [] (str "{ \"data\": " (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) " }"))
-  (GET "/datomic-json-name" [] (json/generate-string {:data (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) }))
+  (GET "/datomic-json-name" [] (json/write-str {:data (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) }))
 
   (GET "/datomic-addr" [] (str (q '[:find ?e ?v :where [?e :user/address ?v ]] (get-db conn))))
   (GET "/datomic-join" [] (str (q '[:find ?e ?v1 ?v1tx ?v2 ?v2tx :where [?e :user/name ?v1 ?v1tx ][?e :user/address ?v2 ?v2tx ]] (get-db conn))))
