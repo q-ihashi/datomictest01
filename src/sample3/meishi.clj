@@ -24,14 +24,14 @@
 
   {:db/id #db/id[:db.part/db]
    :db/ident :user/myMeishi
-   :db/valueType :db.type/string
+   :db/valueType :db.type/long
    :db/cardinality :db.cardinality/many
    :db/doc "myMeishi"
    :db.install/_attribute :db.part/db}
 
   {:db/id #db/id[:db.part/db]
    :db/ident :user/hasMeishi
-   :db/valueType :db.type/string
+   :db/valueType :db.type/long
    :db/cardinality :db.cardinality/many
    :db/doc "hasMeishi"
    :db.install/_attribute :db.part/db}
@@ -76,6 +76,10 @@
    :db/doc "meishi email"
    :db.install/_attribute :db.part/db}
 
+  ]
+  )
+  (daf meishi-data
+  [
   [:db/add 1 :user/loginId "logtaro1"]
   [:db/add 1 :user/name "taro1"]
   [:db/add 1 :user/myMeishi "1" ]
