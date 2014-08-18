@@ -71,7 +71,8 @@
   (GET "/datomic-json-test" [pp] (json/write-str {:data pp}))
   (GET "/datomic-json-meishi2-p" [pp1]
        (json/write-str {:uname (q '[:find ?v :in $ ?p :where [?p :user/name ?v ]]   (get-db conn) (Long/parseLong pp1)),
-                        :title (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]] (get-db conn) (Long/parseLong pp1)),
+                        :myMeishi  (q '[:find ?v :in $ ?p :where [?p :user/myMeishi ?v]] (get-db conn) (Long/parseLong pp1)),
+                        :hasMeishi (q '[:find ?v :in $ ?p :where [?p :user/hasMeishi ?v]] (get-db conn) (Long/parseLong pp1)),
                         :name  (q '[:find ?v :in $ ?p :where [?p :meishi/name ?v]]  (get-db conn) (Long/parseLong pp1)),
                         :addr  (q '[:find ?v :in $ ?p :where [?p :meishi/addr ?v]]  (get-db conn) (Long/parseLong pp1)),
                         :tel   (q '[:find ?v :in $ ?p :where [?p :meishi/tel ?v]]   (get-db conn) (Long/parseLong pp1)),
