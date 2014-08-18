@@ -71,7 +71,7 @@
   (GET "/datomic-json-meishi2-p" [p]
        (json/write-str {:uname (q '[:find ?v :where [1 :user/name ?v ]] (get-db conn)),
                         :title (q '[:find ?v :where [1 :meishi/title ?v]] (get-db conn))
-                        })
+                        }))
 
   (GET "/datomic-addr" [] (str (q '[:find ?e ?v :where [?e :user/address ?v ]] (get-db conn))))
   (GET "/datomic-join" [] (str (q '[:find ?e ?v1 ?v1tx ?v2 ?v2tx :where [?e :user/name ?v1 ?v1tx ][?e :user/address ?v2 ?v2tx ]] (get-db conn))))
