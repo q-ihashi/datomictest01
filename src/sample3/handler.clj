@@ -62,13 +62,8 @@
 (defn tra [sch] (d/transact conn sch))
 
 (defroutes app-routes
-  (GET "/" [] "Hello World")
-  (GET "/datomic-name" [] (str (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn))))
-  (GET "/datomic-json-namebk" [] (str "{ \"data\": " (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) " }"))
-  (GET "/datomic-json-name" [] (json/write-str {:data (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) }))
-  (GET "/datomic-json-name-p" [p] (json/write-str {:data (q '[:find ?v :where [1 :user/name ?v ]] (get-db conn)) }))
-  (GET "/datomic-json-meishi-p" [p] (json/write-str {:data (q '[:find ?vn ?vt :where [1 :user/name ?vn ][1 :meishi/title ?vt]] (get-db conn)) }))
-  (GET "/datomic-json-test" [pp] (json/write-str {:data pp}))
+  (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
+  (GET "/datomicschemainitdata" [] (str (d/transact conn meishi/meishi-data)))
   (GET "/datomic-json-meishi2-p" [pp1]
        (json/write-str {:uname (q '[:find ?v :in $ ?p :where [?p :user/name ?v ]]   (get-db conn) (Long/parseLong pp1)),
                         :myMeishi  (q '[:find ?v :in $ ?p :where [?p :user/myMeishi ?v]] (get-db conn) (Long/parseLong pp1)),
@@ -78,7 +73,22 @@
                         :tel   (q '[:find ?v :in $ ?p :where [?p :meishi/tel ?v]]   (get-db conn) (Long/parseLong pp1)),
                         :email (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) (Long/parseLong pp1)),
                         }))
+  (GET "/datomic-add-uname"     [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/name updata]])))
+  (GET "/datomic-add-myMeishi"  [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/myMeishi (Long/parseLong updata)]])))
+  (GET "/datomic-add-hasMeishi" [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/hasMeishi (Long/parseLong updata)]])))
+  (GET "/datomic-add-title"     [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/title updata]])))
+  (GET "/datomic-add-name"      [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/name updata]])))
+  (GET "/datomic-add-addr"      [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/address updata]])))
+  (GET "/datomic-add-tel"       [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/tel updata]])))
+  (GET "/datomic-add-email"     [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/email updata]])))
 
+  (GET "/" [] "Hello World")
+  (GET "/datomic-name" [] (str (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn))))
+  (GET "/datomic-json-namebk" [] (str "{ \"data\": " (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) " }"))
+  (GET "/datomic-json-name" [] (json/write-str {:data (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) }))
+  (GET "/datomic-json-name-p" [pp1] (json/write-str {:data (q '[:find ?v :in $ ?p :where [1 :user/name ?v ]] (get-db conn) (Long/parseLong pp1)) }))
+  (GET "/datomic-json-meishi-p" [p] (json/write-str {:data (q '[:find ?vn ?vt :where [1 :user/name ?vn ][1 :meishi/title ?vt]] (get-db conn)) }))
+  (GET "/datomic-json-test" [pp] (json/write-str {:data pp}))
   (GET "/datomic-addr" [] (str (q '[:find ?e ?v :where [?e :user/address ?v ]] (get-db conn))))
   (GET "/datomic-join" [] (str (q '[:find ?e ?v1 ?v1tx ?v2 ?v2tx :where [?e :user/name ?v1 ?v1tx ][?e :user/address ?v2 ?v2tx ]] (get-db conn))))
   (GET "/datomic-entity"  [] (str (q '[:find ?k ?v ?tx ?added :where [17592186045570 ?k ?v ?tx ?added]] (get-db conn))))
@@ -86,8 +96,6 @@
   (GET "/datomic-txInstant"  [] (str (q '[:find ?e ?v :where [?e :db/txInstant ?v]] (get-db conn))))
   (GET "/datomicschemaname" [] (str (d/transact conn s-tx-user-name)))
   (GET "/datomicschemaaddr" [] (str (d/transact conn s-tx-user-address)))
-  (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
-  (GET "/datomicschemainitdata" [] (str (d/transact conn meishi/meishi-data)))
 ;  (GET "/datomicschemainit" [] (str (map tra meishi/meishi-schema)))
   (GET "/datomicadd" [] (str (d/transact conn [[:db/add #db/id[:db.part/user] :user/address "kanagawa"]
                   [:db/add #db/id[:db.part/user] :user/name "taro"]])))
