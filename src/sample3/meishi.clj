@@ -76,8 +76,8 @@
    :db/doc "meishi email"
    :db.install/_attribute :db.part/db}
 
-  [:db/add 1 :user/name "taro1"]
   [:db/add 1 :user/loginId "logtaro1"]
+  [:db/add 1 :user/name "taro1"]
   [:db/add 1 :user/myMeishi 1 ]
   [:db/add 1 :user/myMeishi 2 ]
   [:db/add 1 :user/myMeishi 3 ]
