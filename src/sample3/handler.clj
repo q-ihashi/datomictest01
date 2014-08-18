@@ -69,13 +69,13 @@
   (GET "/datomic-json-name-p" [p] (json/write-str {:data (q '[:find ?v :where [1 :user/name ?v ]] (get-db conn)) }))
   (GET "/datomic-json-meishi-p" [p] (json/write-str {:data (q '[:find ?vn ?vt :where [1 :user/name ?vn ][1 :meishi/title ?vt]] (get-db conn)) }))
   (GET "/datomic-json-test" [pp] (json/write-str {:data pp}))
-  (GET "/datomic-json-meishi2-p" [p1]
-       (json/write-str {:uname (q '[:find ?v :where [(Long/parseLong p1) :user/name ?v ]]   (get-db conn)),
-                        :title (q '[:find ?v :where [(Long/parseLong p1) :meishi/title ?v]] (get-db conn)),
-                        :name  (q '[:find ?v :where [(Long/parseLong p1) :meishi/name ?v]]  (get-db conn)),
-                        :addr  (q '[:find ?v :where [(Long/parseLong p1) :meishi/addr ?v]]  (get-db conn)),
-                        :tel   (q '[:find ?v :where [(Long/parseLong p1) :meishi/tel ?v]]   (get-db conn)),
-                        :email (q '[:find ?v :where [(Long/parseLong p1) :meishi/email ?v]] (get-db conn)),
+  (GET "/datomic-json-meishi2-p" [pp]
+       (json/write-str {:uname (q '[:find ?v :where [(Long/parseLong pp) :user/name ?v ]]   (get-db conn)),
+                        :title (q '[:find ?v :where [(Long/parseLong pp) :meishi/title ?v]] (get-db conn)),
+                        :name  (q '[:find ?v :where [(Long/parseLong pp) :meishi/name ?v]]  (get-db conn)),
+                        :addr  (q '[:find ?v :where [(Long/parseLong pp) :meishi/addr ?v]]  (get-db conn)),
+                        :tel   (q '[:find ?v :where [(Long/parseLong pp) :meishi/tel ?v]]   (get-db conn)),
+                        :email (q '[:find ?v :where [(Long/parseLong pp) :meishi/email ?v]] (get-db conn)),
                         }))
 
   (GET "/datomic-addr" [] (str (q '[:find ?e ?v :where [?e :user/address ?v ]] (get-db conn))))
