@@ -78,7 +78,8 @@
 
   ]
   )
-  (daf meishi-data
+
+  (def meishi-data
   [
   [:db/add 1 :user/loginId "logtaro1"]
   [:db/add 1 :user/name "taro1"]
@@ -104,4 +105,4 @@
   [:db/add 5 :user/name "taro5"]
   [:db/add 5 :user/loginId "logtaro5"]
   ]
-  )
+)
