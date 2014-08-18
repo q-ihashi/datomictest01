@@ -78,6 +78,11 @@
 
   [:db/add 1 :user/name "taro1"]
   [:db/add 1 :user/loginId "logtaro1"]
+  [:db/add 1 :meishi/title "meishi-title1"]
+  [:db/add 1 :meishi/name "meishi-name1"]
+  [:db/add 1 :meishi/addr "meishi-addr1"]
+  [:db/add 1 :meishi/tel "meishi-tel1"]
+  [:db/add 1 :meishi/email "meishi-email1"]
   [:db/add 2 :user/name "taro2"]
   [:db/add 2 :user/loginId "logtaro2"]
   [:db/add 3 :user/name "taro3"]
