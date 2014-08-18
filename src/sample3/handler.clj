@@ -68,6 +68,7 @@
   (GET "/datomic-json-name" [] (json/write-str {:data (q '[:find ?e ?v :where [?e :user/name ?v ]] (get-db conn)) }))
   (GET "/datomic-json-name-p" [p] (json/write-str {:data (q '[:find ?v :where [1 :user/name ?v ]] (get-db conn)) }))
   (GET "/datomic-json-meishi-p" [p] (json/write-str {:data (q '[:find ?vn ?vt :where [1 :user/name ?vn ][1 :meishi/title ?vt]] (get-db conn)) }))
+  (GET "/datomic-json-test" [pp] (json/write-str {:data pp}))
   (GET "/datomic-json-meishi2-p" [p1]
        (json/write-str {:uname (q '[:find ?v :where [p1 :user/name ?v ]] (get-db conn)),
                         :title (q '[:find ?v :where [p1 :meishi/title ?v]] (get-db conn)),
