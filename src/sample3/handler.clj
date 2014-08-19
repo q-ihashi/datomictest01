@@ -73,9 +73,20 @@
                         :tel   (q '[:find ?v :in $ ?p :where [?p :meishi/tel ?v]]   (get-db conn) (Long/parseLong pp1)),
                         :email (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) (Long/parseLong pp1)),
                         }))
+  (GET "/datomic-json-meishi3-p" [pp1]
+       (let [pp1long (Long/parseLong pp1)]
+       (json/write-str {:uname (q '[:find ?v :in $ ?p :where [?p :user/name ?v ]]   (get-db conn) pp1long),
+                        :myMeishi  (q '[:find ?v :in $ ?p :where [?p :user/myMeishi ?v]] (get-db conn) pp1long),
+                        :hasMeishi (q '[:find ?v :in $ ?p :where [?p :user/hasMeishi ?v]] (get-db conn) pp1long),
+                        :name  (q '[:find ?v :in $ ?p :where [?p :meishi/name ?v]]  (get-db conn) pp1long),
+                        :addr  (q '[:find ?v :in $ ?p :where [?p :meishi/addr ?v]]  (get-db conn) pp1long),
+                        :tel   (q '[:find ?v :in $ ?p :where [?p :meishi/tel ?v]]   (get-db conn) pp1long),
+                        :email (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) pp1long),
+                        }))
+  )
   (GET "/datomic-json-meishi2-p" [pp1]
        (json/write-str {:uname (q '[:find ?v :in $ ?p :where [?p :user/name ?v ]]   (get-db conn) (Long/parseLong pp1))})
-       )
+      )
   (GET "/meishi-add-uname"     [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/name updata]])))
   (GET "/meishi-add-myMeishi"  [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/myMeishi (Long/parseLong updata)]])))
   (GET "/meishi-add-hasMeishi" [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/hasMeishi (Long/parseLong updata)]])))
