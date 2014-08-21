@@ -75,6 +75,7 @@
   (GET "/meishi-get-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
+               {:title  (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]]  (get-db conn) pp1long),
                {:name  (q '[:find ?v :in $ ?p :where [?p :meishi/name ?v]]  (get-db conn) pp1long),
                 :addr  (q '[:find ?v :in $ ?p :where [?p :meishi/addr ?v]]  (get-db conn) pp1long),
                 :tel   (q '[:find ?v :in $ ?p :where [?p :meishi/tel ?v]]   (get-db conn) pp1long),
