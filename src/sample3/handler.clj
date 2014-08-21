@@ -75,17 +75,19 @@
   (GET "/meishi-get-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-               {:title (map first (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]] (get-db conn) pp1long)),
-                :name  (map first (q '[:find ?v :in $ ?p :where [?p :meishi/name ?v]]  (get-db conn) pp1long)),
-                :addr  (map first (q '[:find ?v :in $ ?p :where [?p :meishi/addr ?v]]  (get-db conn) pp1long)),
-                :tel   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/tel ?v]]   (get-db conn) pp1long)),
-                :email (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) pp1long)),
+               {:title   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]] (get-db conn) pp1long)),
+                :company (map first (q '[:find ?v :in $ ?p :where [?p :meishi/company ?v]]  (get-db conn) pp1long)),
+                :name    (map first (q '[:find ?v :in $ ?p :where [?p :meishi/name ?v]]  (get-db conn) pp1long)),
+                :addr    (map first (q '[:find ?v :in $ ?p :where [?p :meishi/addr ?v]]  (get-db conn) pp1long)),
+                :tel     (map first (q '[:find ?v :in $ ?p :where [?p :meishi/tel ?v]]   (get-db conn) pp1long)),
+                :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) pp1long)),
                }))
   )
   (GET "/meishi-add-uname"     [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/name updata]])))
   (GET "/meishi-add-myMeishi"  [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/myMeishi (Long/parseLong updata)]])))
   (GET "/meishi-add-hasMeishi" [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/hasMeishi (Long/parseLong updata)]])))
   (GET "/meishi-add-title"     [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/title updata]])))
+  (GET "/meishi-add-company"   [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/company updata]])))
   (GET "/meishi-add-name"      [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/name updata]])))
   (GET "/meishi-add-addr"      [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/address updata]])))
   (GET "/meishi-add-tel"       [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :meishi/tel updata]])))
