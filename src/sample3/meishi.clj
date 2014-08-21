@@ -88,7 +88,7 @@
   [:db/add 1 :user/myMeishi 3 ]
   [:db/add 1 :user/hasMeishi 4 ]
   [:db/add 1 :user/hasMeishi 6 ]
-  [:db/add 1 :meishi/title "meishi-title1"]
+  [:db/add 1 :meishi/title "シェアクレスト"]
   [:db/add 1 :meishi/name "meishi-name1"]
   [:db/add 1 :meishi/addr "meishi-addr1"]
   [:db/add 1 :meishi/tel "meishi-tel1"]
