@@ -67,7 +67,7 @@
   (GET "/user-get-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-               {:uname (q '[:find ?v :in $ ?p :where [?p :user/name ?v ]]   (get-db conn) pp1long),
+               {:uname (map first (q '[:find ?v :in $ ?p :where [?p :user/name ?v ]]   (get-db conn) pp1long)),
                 :myMeishi  (map first (q '[:find ?v :in $ ?p :where [?p :user/myMeishi ?v]] (get-db conn) pp1long)),
                 :hasMeishi (map first (q '[:find ?v :in $ ?p :where [?p :user/hasMeishi ?v]] (get-db conn) pp1long)),
                }))
