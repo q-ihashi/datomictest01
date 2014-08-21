@@ -45,6 +45,14 @@
    :db.install/_attribute :db.part/db}
 
   {:db/id #db/id[:db.part/db]
+   :db/ident :meishi/company
+   :db/valueType :db.type/string
+   :db/cardinality :db.cardinality/one
+   :db/fulltext false
+   :db/doc "meishi company"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id #db/id[:db.part/db]
    :db/ident :meishi/name
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
@@ -89,16 +97,19 @@
   [:db/add 1 :user/hasMeishi 4 ]
   [:db/add 1 :user/hasMeishi 6 ]
   [:db/add 1 :meishi/title "シェアクレスト"]
+  [:db/add 1 :meishi/name "meishi-comp1"]
   [:db/add 1 :meishi/name "meishi-name1"]
   [:db/add 1 :meishi/addr "meishi-addr1"]
   [:db/add 1 :meishi/tel "meishi-tel1"]
   [:db/add 1 :meishi/email "meishi-email1"]
   [:db/add 2 :meishi/title "meishi-title2"]
+  [:db/add 2 :meishi/name "meishi-comp2"]
   [:db/add 2 :meishi/name "meishi-name2"]
   [:db/add 2 :meishi/addr "meishi-addr2"]
   [:db/add 2 :meishi/tel "meishi-tel2"]
   [:db/add 2 :meishi/email "meishi-email2"]
   [:db/add 3 :meishi/title "meishi-title3"]
+  [:db/add 3 :meishi/name "meishi-comp3"]
   [:db/add 3 :meishi/name "meishi-name3"]
   [:db/add 3 :meishi/addr "meishi-addr3"]
   [:db/add 3 :meishi/tel "meishi-tel3"]
