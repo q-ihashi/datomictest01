@@ -64,4 +64,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/hello_world" />
+
+    <TextView
+        android:id="@+id/txtJSON"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtMsg"
+        android:layout_alignLeft="@+id/txtMeishiEmail"
+        android:layout_alignRight="@+id/txtMeishiEmail"
+        android:layout_below="@+id/txtMeishiEmail"
+        android:layout_marginTop="17dp"
+        android:text="TextView" />
+
 </RelativeLayout>

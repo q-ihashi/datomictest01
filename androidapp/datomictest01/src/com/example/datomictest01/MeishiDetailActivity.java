@@ -1,15 +1,22 @@
 package com.example.datomictest01;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.androidquery.AQuery;
 import com.example.datomictest01.dto.MeishiDto;
+import com.example.datomictest01.util.HttpUtil;
 
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class MeishiDetailActivity extends Activity {
 
@@ -30,6 +37,37 @@ public class MeishiDetailActivity extends Activity {
 		meishi = (MeishiDto)getIntent().getParcelableExtra("MEISHIDETAIL");
 		printDetail();
 
+//		Å`óöóèÓïÒÇÃéÊìæÇÇ±Ç±Ç≈çsÇ§Å`
+//		(new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				String jsondata = null;
+//				JSONObject jo = null;
+//				JSONArray ja = null;
+//				String ret = "";
+//				try {
+//					jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "user-get-p?pp1="+meishi.id,null);
+//					jo = new JSONObject(jsondata);
+//					ja = jo.getJSONArray("txInstant");
+//					int count = ja.length();
+//					for (int i=0 ; i < count; i++) {
+//						ret = ret + ja.getJSONObject(i).toString();
+//					}
+//				} catch (Exception e) {
+//					Log.d("onCreate", e.toString());
+//					return;
+//				}
+//				final String w = ret;
+//				runOnUiThread(new Runnable() {
+//					@Override
+//					public void run() {
+//						TextView txtJSON = (TextView)findViewById(R.id.txtJSON);
+//						txtJSON.setText(w);
+//					}
+//				});
+//			}
+//		})).start();
+		
 	}
 
 	@Override
