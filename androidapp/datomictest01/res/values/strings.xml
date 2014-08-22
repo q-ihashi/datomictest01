@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">datomictest01</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_exit">Exit</string>
+    <string name="hello_world">meishi list!</string>
+    <string name="title_pref_activity">Settings</string>
+    <string name="title_pref_f0category">User Settings</string>
+    <string name="title_pref_userId">UserID(numeric)</string>
+    <string name="title_pref_f1category">Host Settings</string>
+    <string name="title_pref_apibaseurl">API BaseURL</string>
+    <string name="title_pref_imgbaseurl">IMAGE BaseURL</string>
+    <string name="title_activity_meishi_detail">MeishiDetailActivity</string>
+
+</resources>

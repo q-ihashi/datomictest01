@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/title_pref_f1category">
+        <EditTextPreference android:key="pref_apibaseurl"
+            android:defaultValue="http://192.168.0.79:3000/"
+            android:dialogTitle="@string/title_pref_apibaseurl"
+            android:title="@string/title_pref_apibaseurl"
+            android:inputType="textUri"/>
+        <EditTextPreference android:key="pref_imgbaseurl"
+            android:defaultValue="http://192.168.0.79:3000/images/"
+            android:dialogTitle="@string/title_pref_imgbaseurl"
+            android:title="@string/title_pref_imgbaseurl"
+            android:inputType="textUri"/>
+        </PreferenceCategory>
+
+</PreferenceScreen>

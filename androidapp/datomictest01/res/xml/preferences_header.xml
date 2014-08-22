@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+    <header
+        android:fragment="com.example.datomictest01.PreferenceFrag0"
+        android:title="UserInfo" android:summary="UserId, UserName, etc..." />
+    <header
+        android:fragment="com.example.datomictest01.PreferenceFrag1"
+        android:title="ServerInfo" android:summary="API-Hostname, IMAGE-HOSTNAME etc..." />
+</preference-headers>
