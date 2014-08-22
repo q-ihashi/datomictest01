@@ -83,6 +83,13 @@
                 :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) pp1long)),
                }))
   )
+  (GET "meishi-tx-p" [pp1]
+       (let [pp1long (Long/parseLong pp1)]
+           (json/write-str
+             {:txInstant (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n][?tx :db/txInstant ?when]] (get-db conn) pp1long)
+             }))
+  )
+
   (GET "/meishi-add-uname"     [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/name updata]])))
   (GET "/meishi-add-myMeishi"  [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/myMeishi (Long/parseLong updata)]])))
   (GET "/meishi-add-hasMeishi" [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/hasMeishi (Long/parseLong updata)]])))
