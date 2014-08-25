@@ -38,35 +38,35 @@ public class MeishiDetailActivity extends Activity {
 		printDetail();
 
 //		`—š—ğî•ñ‚Ìæ“¾‚ğ‚±‚±‚Ås‚¤`
-//		(new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				String jsondata = null;
-//				JSONObject jo = null;
-//				JSONArray ja = null;
-//				String ret = "";
-//				try {
-//					jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "user-get-p?pp1="+meishi.id,null);
-//					jo = new JSONObject(jsondata);
-//					ja = jo.getJSONArray("txInstant");
-//					int count = ja.length();
-//					for (int i=0 ; i < count; i++) {
-//						ret = ret + ja.getJSONObject(i).toString();
-//					}
-//				} catch (Exception e) {
-//					Log.d("onCreate", e.toString());
-//					return;
-//				}
-//				final String w = ret;
-//				runOnUiThread(new Runnable() {
-//					@Override
-//					public void run() {
-//						TextView txtJSON = (TextView)findViewById(R.id.txtJSON);
-//						txtJSON.setText(w);
-//					}
-//				});
-//			}
-//		})).start();
+		(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				String jsondata = null;
+				JSONObject jo = null;
+				JSONArray ja = null;
+				String ret = "";
+				try {
+					jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "meishi-tx-p?pp1="+meishi.id,null);
+					jo = new JSONObject(jsondata);
+					ja = jo.getJSONArray("txInstant");
+					int count = ja.length();
+					for (int i=0 ; i < count; i++) {
+						ret = ret + "," + ja.getLong(i);
+					}
+				} catch (Exception e) {
+					Log.d("onCreate", e.toString());
+					return;
+				}
+				final String w = ret;
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						TextView txtJSON = (TextView)findViewById(R.id.txtJSON);
+						txtJSON.setText(w);
+					}
+				});
+			}
+		})).start();
 		
 	}
 
