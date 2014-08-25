@@ -10,6 +10,10 @@
             [clojure.data.json :as json]
             [clj-time.core :as t]
             [clj-time.format :as f]
+            [clj-time.coerce :as c]
+            [clj-time.local :as l]
+            [clj-time.periodic :as p]
+            [clj-time.predicates :as pr]
             [datomic.api :as d :refer [db q]]
             ))
 
@@ -62,7 +66,8 @@
 
 (defn get-db [cn] (d/db cn))
 (defn tra [sch] (d/transact conn sch))
-(def custom-formatter (f/formatter "yyyyMMdd"))
+(def built-in-formatter  (f/formatters :basic-date-time))
+(def custom-formatter    (f/formatter "yyyyMMdd"))
 (defn custom-unparse [d] (f/unparse custom-formatter d))
 
 (defroutes app-routes
@@ -90,7 +95,7 @@
   (GET "/meishi-tx-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-             {:txInstant (map custom-unparse (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n][?tx :db/txInstant ?when]] (get-db conn) pp1long)))
+             {:txInstant (map l/to-local-date-time (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n][?tx :db/txInstant ?when]] (get-db conn) pp1long)))
              }))
   )
 
