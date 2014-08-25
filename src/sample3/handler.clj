@@ -8,6 +8,7 @@
             [ring.util.response :refer [resource-response response]]
             [ring.middleware.json :as middleware]
             [clojure.data.json :as json]
+            [clj-time "0.8.0"]
             [datomic.api :as d :refer [db q]]
             ))
 
@@ -60,8 +61,8 @@
 
 (defn get-db [cn] (d/db cn))
 (defn tra [sch] (d/transact conn sch))
-(defn date->unixtime [d]
-  (long (/ (.getTime d) 1000)))
+(def custom-formatter (formatter "yyyyMMdd"))
+(defn custom-unparse [d] (unparse custom-formatter d))
 
 (defroutes app-routes
   (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
@@ -88,7 +89,7 @@
   (GET "/meishi-tx-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-             {:txInstant (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n][?tx :db/txInstant ?when]] (get-db conn) pp1long)
+             {:txInstant (map custom-unparse (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n][?tx :db/txInstant ?when]] (get-db conn) pp1long)))
              }))
   )
 
