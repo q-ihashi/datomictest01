@@ -108,7 +108,7 @@
   (GET "/meishi-tx-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-             {:txInstant (sort (map c/to-long (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n][?tx :db/txInstant ?when]] (get-db conn) pp1long))))
+             {:txInstant (sort (map c/to-long (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n ?when]] (get-db conn) pp1long))))
              }))
   )
 
