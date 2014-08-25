@@ -60,6 +60,8 @@
 
 (defn get-db [cn] (d/db cn))
 (defn tra [sch] (d/transact conn sch))
+(defn date->unixtime [d]
+  (long (/ (.getTime d) 1000)))
 
 (defroutes app-routes
   (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
