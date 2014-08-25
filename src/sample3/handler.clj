@@ -92,6 +92,19 @@
                 :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) pp1long)),
                }))
   )
+  (GET "/meishi-get-ptx" [pp1 pp2]
+       (let [pp1long (Long/parseLong pp1)
+             pp2long (Long/parseLong pp2)
+             ]
+           (json/write-str
+               {:title   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/title ?v ?tx]] (get-db conn) pp1long pp2long)),
+                :company (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/company ?v ?tx]]  (get-db conn) pp1long pp2long)),
+                :name    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/name ?v ?tx]]  (get-db conn) pp1long pp2long)),
+                :addr    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/addr ?v ?tx]]  (get-db conn) pp1long pp2long)),
+                :tel     (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/tel ?v ?tx]]   (get-db conn) pp1long pp2long)),
+                :email   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/email ?v ?tx]] (get-db conn) pp1long pp2long)),
+               }))
+  )
   (GET "/meishi-tx-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
