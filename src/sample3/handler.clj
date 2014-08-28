@@ -93,7 +93,7 @@
                }))
   )
   ;指定時刻時点の情報朱徳
-  (GET "/meishi-get-tp" [pp1]
+  (GET "/meishi-get-tp" [pp1 pp2]
        (let [pp1long (Long/parseLong pp1)
              pp2long (Long/parseLong pp2)
              olddb   (d/as-of (get-db conn) pp2long)
