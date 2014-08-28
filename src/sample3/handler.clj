@@ -114,7 +114,12 @@
            (json/write-str
              {:txInstant (->> (q '[:find ?tx
                                   :in $ ?e
-                                  :where [?e :meishi ?v ?tx ?op]]
+                                  :where [?e ?attr ?v ?tx ?op]
+                                         [?e :db/valueType]
+                                         [?e :db/ident ?a]
+                                         [(namespace ?a) ?ns]
+                                         [(= ?ns "meishi")]
+                                  ]
                                 hist
                                 pp1long
                                     )
