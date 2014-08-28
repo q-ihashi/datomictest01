@@ -112,7 +112,7 @@
        (let [pp1long (Long/parseLong pp1)
              hist    (d/history (get-db conn))]
            (json/write-str
-             {:txInstant (->> (q '[:find ?e ?attr ?tx
+             {:txInstant (->> (q '[:find ?tx
                                    :in $ ?e
                                    :where
                                      [?e ?attr ?v ?tx ?op]
