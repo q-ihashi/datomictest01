@@ -131,11 +131,12 @@
   (GET "/meishi-hist-ptst" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-             {:txInstant (->> (q '[:find ?e
+             {:txInstant (->> (q '[:find ?e ?attr ?tx
                                    :in $
                                    :where
-                                     [?e :db/valueType]
-                                     [?e :db/ident ?a]
+                                     [?e ?attr ?v ?tx ?op]
+                                     [?attr :db/valueType]
+                                     [?attr :db/ident ?a]
                                      [(namespace ?a) ?ns]
                                      [(= ?ns "meishi")]
                                   ]
