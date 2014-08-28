@@ -128,6 +128,23 @@
                          )
              }))
   )
+  (GET "/meishi-hist-ptst" [pp1]
+       (let [pp1long (Long/parseLong pp1)]
+           (json/write-str
+             {:txInstant (->> (q '[:find ?e
+                                   :in $
+                                   :where
+                                     [?e :db/valueType]
+                                     [?e :db/ident ?a]
+                                     [(namespace ?a) ?ns]
+                                     [(= ?ns "story")]
+                                  ]
+                                  (get-db conn)
+                                    )
+                              (map str)
+                         )
+             }))
+  )
 
 
   (GET "/meishi-get-ptx" [pp1 pp2]
