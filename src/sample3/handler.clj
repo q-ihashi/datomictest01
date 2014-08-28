@@ -120,8 +120,8 @@
              }))
   )
   (GET "/test_hist2" [pp1]
-       (let [pp1long (Long/parseLong pp1)]
-            [hist (d/history (get-db conn))]
+       (let [pp1long (Long/parseLong pp1)
+             hist (d/history (get-db conn))]
            (json/write-str
              {:txInstant (->> (q '[:find ?tx ?v ?op
                                    :in $ ?e
