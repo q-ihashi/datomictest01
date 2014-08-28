@@ -97,31 +97,24 @@
              pp2long (Long/parseLong pp2)
              ]
            (json/write-str
-               {:title   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/title ?v]]   (as-of db ?tx) pp1long pp2long)),
-                :company (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/company ?v]] (as-of db ?tx) pp1long pp2long)),
-                :name    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/name ?v]]    (as-of db ?tx) pp1long pp2long)),
-                :addr    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/addr ?v]]    (as-of db ?tx) pp1long pp2long)),
-                :tel     (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/tel ?v]]     (as-of db ?tx) pp1long pp2long)),
-                :email   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/email ?v]]   (as-of db ?tx) pp1long pp2long)),
+               {:title   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/title ?v ?tx]] (get-db conn) pp1long pp2long)),
+                :company (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/company ?v ?tx]]  (get-db conn) pp1long pp2long)),
+                :name    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/name ?v ?tx]]  (get-db conn) pp1long pp2long)),
+                :addr    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/addr ?v ?tx]]  (get-db conn) pp1long pp2long)),
+                :tel     (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/tel ?v ?tx]]   (get-db conn) pp1long pp2long)),
+                :email   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/email ?v ?tx]] (get-db conn) pp1long pp2long)),
                }))
   )
-;  (GET "/meishi-get-ptx" [pp1 pp2]
-;       (let [pp1long (Long/parseLong pp1)
-;             pp2long (Long/parseLong pp2)
-;             ]
-;           (json/write-str
-;               {:title   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/title ?v ?tx]] (get-db conn) pp1long pp2long)),
-;                :company (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/company ?v ?tx]]  (get-db conn) pp1long pp2long)),
-;                :name    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/name ?v ?tx]]  (get-db conn) pp1long pp2long)),
-;                :addr    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/addr ?v ?tx]]  (get-db conn) pp1long pp2long)),
-;                :tel     (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/tel ?v ?tx]]   (get-db conn) pp1long pp2long)),
-;                :email   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/email ?v ?tx]] (get-db conn) pp1long pp2long)),
-;               }))
-;  )
   (GET "/meishi-tx-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
              {:txInstant (sort (map c/to-long (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n ?when]] (get-db conn) pp1long))))
+             }))
+  )
+  (GET "/test_hist" [pp1]
+       (let [pp1long (Long/parseLong pp1)]
+           (json/write-str
+             {:txInstant (d/history db)
              }))
   )
 
