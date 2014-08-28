@@ -107,7 +107,7 @@
                 :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] olddb pp1long)),
                }))
   )
-  ;全履歴取得
+  ;全履歴(時刻，logn値)取得
   (GET "/meishi-hist-p" [pp1]
        (let [pp1long (Long/parseLong pp1)
              hist (d/history (get-db conn))]
