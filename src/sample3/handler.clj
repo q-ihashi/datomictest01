@@ -115,7 +115,7 @@
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
              {:txInstant (->> (d/history (get-db conn))
-                              (map str)
+                              (str)
                          )
              }))
   )
