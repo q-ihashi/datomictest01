@@ -92,6 +92,21 @@
                 :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) pp1long)),
                }))
   )
+  ;指定時刻時点の情報朱徳
+  (GET "/meishi-get-tp" [pp1]
+       (let [pp1long (Long/parseLong pp1)
+             pp2long (Long/parseLong pp2)
+             olddb   (d/as-of (get-db conn) pp2long)
+             ]
+           (json/write-str
+               {:title   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]] olddb pp1long)),
+                :company (map first (q '[:find ?v :in $ ?p :where [?p :meishi/company ?v]]  olddb pp1long)),
+                :name    (map first (q '[:find ?v :in $ ?p :where [?p :meishi/name ?v]]  olddb pp1long)),
+                :addr    (map first (q '[:find ?v :in $ ?p :where [?p :meishi/addr ?v]]  olddb pp1long)),
+                :tel     (map first (q '[:find ?v :in $ ?p :where [?p :meishi/tel ?v]]   olddb pp1long)),
+                :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] olddb pp1long)),
+               }))
+  )
   (GET "/meishi-get-ptx" [pp1 pp2]
        (let [pp1long (Long/parseLong pp1)
              pp2long (Long/parseLong pp2)
@@ -111,6 +126,7 @@
              {:txInstant (sort (map c/to-long (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n ?when]] (get-db conn) pp1long))))
              }))
   )
+  ;履歴オブジェクト取得
   (GET "/test_hist1" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
@@ -119,20 +135,22 @@
                       )
              }))
   )
+  ;全履歴取得
   (GET "/test_hist2" [pp1]
        (let [pp1long (Long/parseLong pp1)
-             hist (d/history (get-db conn))]
+            hist (d/history (get-db conn))]
            (json/write-str
              {:txInstant (->> (q '[:find ?tx ?attr ?v ?op
-                                   :in $ ?e
-                                   :where [?e ?attr ?v ?tx ?op]]
-                                 hist
-                                 1
-                                     )
+                                  :in $ ?e
+                                  :where [?e ?attr ?v ?tx ?op]]
+                                hist
+                                1
+                                    )
                               (str)
                          )
              }))
   )
+  ;指定時刻(long値)時点のDBからデータ取得
   (GET "/test_hist3" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
