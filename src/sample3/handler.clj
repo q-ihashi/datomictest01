@@ -115,6 +115,7 @@
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
              {:txInstant (->> (d/history (get-db conn))
+                              (first)
                               (str)
                          )
              }))
@@ -124,11 +125,11 @@
             [hist (d/history (get-db conn))]
            (json/write-str
              {:txInstant (->> (q '[:find ?tx ?v ?op
-                                   :in $ ?e
+             1
+                                                    :in $ ?e
                                    :where [?e :user/name ?v ?tx ?op]]
                                  hist
-                                 1
-                                  )
+                                     )
                               (str)
                          )
              }))
