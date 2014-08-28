@@ -111,24 +111,23 @@
              {:txInstant (sort (map c/to-long (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n ?when]] (get-db conn) pp1long))))
              }))
   )
-  (GET "/test_hist" [pp1]
+  (GET "/test_hist1" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
              {:hist (->> (d/history (get-db conn))
-                         (sort-by first)
-                         (map str)
-                    )
+                         (str)
+                      )
              }))
   )
-  (GET "/test_hist" [pp1]
+  (GET "/test_hist2" [pp1]
        (let [pp1long (Long/parseLong pp1)]
             [hist (d/history (get-db conn))]
            (json/write-str
              {:txInstant (->> (q '[:find ?tx ?v ?op
-             1
-                                                    :in $ ?e
+                                   :in $ ?e
                                    :where [?e :user/name ?v ?tx ?op]]
                                  hist
+                                 1
                                      )
                               (str)
                          )
