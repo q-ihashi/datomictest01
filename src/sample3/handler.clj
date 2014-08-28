@@ -109,19 +109,19 @@
   )
   ;全履歴(時刻，logn値)取得
   (GET "/meishi-hist-p" [pp1]
-       (let [pp1long (Long/parseLong pp1)
-             hist (d/history (get-db conn))]
+       (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-             {:txInstant (->> (q '[:find ?tx
-                                  :in $ ?e
-                                  :where [?e ?attr ?v ?tx ?op]
-                                         [?attr :db/valueType]
-                                         [?e :db/ident ?a]
-                                         [(namespace ?a) ?ns]
-                                         [(= ?ns "meishi")]
+             {:txInstant (->> (q '[:find ?e ?attr ?tx
+                                   :in $ ?e
+                                   :where
+                                     [?e ?attr ?v ?tx ?op]
+                                     [?attr :db/valueType]
+                                     [?attr :db/ident ?a]
+                                     [(namespace ?a) ?ns]
+                                     [(= ?ns "meishi")]
                                   ]
-                                hist
-                                pp1long
+                                  (get-db conn)
+                                  pp1long
                                     )
                               (map first)
                               (sort)
