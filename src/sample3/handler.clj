@@ -119,6 +119,20 @@
                          )
              }))
   )
+  (GET "/test_hist" [pp1]
+       (let [pp1long (Long/parseLong pp1)]
+            [hist (d/history (get-db conn))]
+           (json/write-str
+             {:txInstant (->> (q '[:find ?tx ?v ?op
+                                   :in $ ?e
+                                   :where [?e :user/name ?v ?tx ?op]]
+                                 hist
+                                 1
+                                  )
+                              (str)
+                         )
+             }))
+  )
 
   (GET "/meishi-add-uname"     [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/name updata]])))
   (GET "/meishi-add-myMeishi"  [upid updata] (str (d/transact conn [[:db/add (Long/parseLong upid) :user/myMeishi (Long/parseLong updata)]])))
