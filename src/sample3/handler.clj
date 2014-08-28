@@ -124,7 +124,7 @@
                                   hist
                                   pp1long
                                     )
-;                              (map first)
+                              (map first)
                               (sort)
                          )
              }))
