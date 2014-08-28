@@ -118,6 +118,7 @@
                                 hist
                                 pp1long
                                     )
+                              (first)
                               (sort)
                          )
              }))
