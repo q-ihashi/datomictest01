@@ -139,7 +139,7 @@
              {:txInstant (->> (q '[:find ?tx ?attr ?v ?op
                                    :in $ ?e
                                    :where [?e ?attr ?v ?tx ?op]]
-                                 (d/as-of get-db pp1long)
+                                 (d/as-of (get-db conn) pp1long)
                                  1
                                      )
                               (str)
