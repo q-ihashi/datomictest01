@@ -115,7 +115,7 @@
              {:txInstant (->> (q '[:find ?tx
                                   :in $ ?e
                                   :where [?e ?attr ?v ?tx ?op]
-                                         [?e :db/valueType]
+                                         [?attr :db/valueType]
                                          [?e :db/ident ?a]
                                          [(namespace ?a) ?ns]
                                          [(= ?ns "meishi")]
