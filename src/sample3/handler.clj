@@ -114,7 +114,7 @@
            (json/write-str
              {:txInstant (->> (q '[:find ?tx
                                   :in $ ?e
-                                  :where [?e ?attr ?v ?tx ?op]]
+                                  :where [?e :meishi ?v ?tx ?op]]
                                 hist
                                 pp1long
                                     )
