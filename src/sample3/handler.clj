@@ -123,7 +123,7 @@
                                   (get-db conn)
                                   pp1long
                                     )
-                              (map first)
+;                              (map first)
                               (sort)
                          )
              }))
