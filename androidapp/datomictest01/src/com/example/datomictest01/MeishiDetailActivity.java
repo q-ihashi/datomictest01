@@ -1,5 +1,8 @@
 package com.example.datomictest01;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,6 +18,7 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +26,7 @@ public class MeishiDetailActivity extends Activity {
 
 	MeishiDto meishi;
 	AQuery aq;
+	List<String> hists = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,23 +51,28 @@ public class MeishiDetailActivity extends Activity {
 				JSONArray ja = null;
 				String ret = "";
 				try {
-					jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "meishi-tx-p?pp1="+meishi.id,null);
+					jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "meishi-hist-p?pp1="+meishi.id,null);
 					jo = new JSONObject(jsondata);
 					ja = jo.getJSONArray("txInstant");
 					int count = ja.length();
 					for (int i=0 ; i < count; i++) {
 						ret = ret + "," + ja.getLong(i);
+						hists.add(String.valueOf(ja.getLong(i)));
 					}
 				} catch (Exception e) {
 					Log.d("onCreate", e.toString());
 					return;
 				}
-				final String w = ret;
+				final String w = jsondata;
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						TextView txtJSON = (TextView)findViewById(R.id.txtJSON);
 						txtJSON.setText(w);
+						ArrayAdapter<String> adapter = new ArrayAdapter<String>(MeishiDetailActivity.this, android.R.layout.simple_list_item_1);
+						ListView listView = (ListView) findViewById(R.id.listView1);
+						adapter.addAll(hists);
+						listView.setAdapter(adapter);
 					}
 				});
 			}

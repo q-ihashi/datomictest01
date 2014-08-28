@@ -72,8 +72,16 @@
         android:layout_above="@+id/txtMsg"
         android:layout_alignLeft="@+id/txtMeishiEmail"
         android:layout_alignRight="@+id/txtMeishiEmail"
-        android:layout_below="@+id/txtMeishiEmail"
-        android:layout_marginTop="17dp"
         android:text="TextView" />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#c0e060"
+        android:layout_above="@+id/txtJSON"
+        android:layout_alignLeft="@+id/txtMeishiEmail"
+        android:layout_below="@+id/txtMeishiEmail" >
+    </ListView>
 
 </RelativeLayout>
