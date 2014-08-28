@@ -137,7 +137,7 @@
                                      [?e :db/valueType]
                                      [?e :db/ident ?a]
                                      [(namespace ?a) ?ns]
-                                     [(= ?ns "story")]
+                                     [(= ?ns "meishi")]
                                   ]
                                   (get-db conn)
                                     )
