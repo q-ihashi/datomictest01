@@ -107,6 +107,23 @@
                 :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] olddb pp1long)),
                }))
   )
+  ;全履歴取得
+  (GET "/meishi-hist-p" [pp1]
+       (let [pp1long (Long/parseLong pp1)
+             hist (d/history (get-db conn))]
+           (json/write-str
+             {:txInstant (->> (q '[:find ?tx
+                                  :in $ ?e
+                                  :where [?e ?attr ?v ?tx ?op]]
+                                hist
+                                pp1long
+                                    )
+                              (str)
+                         )
+             }))
+  )
+
+
   (GET "/meishi-get-ptx" [pp1 pp2]
        (let [pp1long (Long/parseLong pp1)
              pp2long (Long/parseLong pp2)
