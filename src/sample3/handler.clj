@@ -92,7 +92,7 @@
                 :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) pp1long)),
                }))
   )
-  ;指定時刻時点の情報朱徳
+  ;指定時刻時点の情報取得
   (GET "/meishi-get-tp" [pp1 pp2]
        (let [pp1long (Long/parseLong pp1)
              pp2long (Long/parseLong pp2)
@@ -110,13 +110,19 @@
   ;全履歴(時刻，logn値)取得
   (GET "/meishi-hist-p" [pp1]
        (let [pp1long (Long/parseLong pp1)
-             hist (d/history (get-db conn))]
+             hist    (d/history (get-db conn))]
            (json/write-str
              {:txInstant (->> (q '[:find ?tx
-                                  :in $ ?e
-                                  :where [?e ?attr ?v ?tx ?op]]
-                                hist
-                                pp1long
+                                   :in $ ?e
+                                   :where
+                                     [?e ?attr ?v ?tx ?op]
+                                     [?attr :db/valueType]
+                                     [?attr :db/ident ?a]
+                                     [(namespace ?a) ?ns]
+                                     [(= ?ns "meishi")]
+                                  ]
+                                  hist
+                                  pp1long
                                     )
                               (map first)
                               (sort)
