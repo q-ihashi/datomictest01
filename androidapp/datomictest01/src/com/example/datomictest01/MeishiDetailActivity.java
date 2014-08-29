@@ -94,17 +94,17 @@ public class MeishiDetailActivity extends Activity {
 											wjo = new JSONObject(jsondata);
 			//								meishi.id = ja.getInt(i);
 											wja = wjo.getJSONArray("title");
-											if (wja != null && wja.length()>0) meishi.title = wja.getString(0);
+											if (wja != null && wja.length()>0) meishi.title = wja.getString(0); else meishi.title="";
 											wja = wjo.getJSONArray("company");
-											if (wja != null && wja.length()>0) meishi.company = wja.getString(0);
+											if (wja != null && wja.length()>0) meishi.company = wja.getString(0); else meishi.company="";
 											wja = wjo.getJSONArray("name");
-											if (wja != null && wja.length()>0) meishi.name = wja.getString(0);
+											if (wja != null && wja.length()>0) meishi.name = wja.getString(0); else meishi.name="";
 											wja = wjo.getJSONArray("addr");
-											if (wja != null && wja.length()>0) meishi.addr = wja.getString(0);
+											if (wja != null && wja.length()>0) meishi.addr = wja.getString(0); else meishi.addr="";
 											wja = wjo.getJSONArray("tel");
-											if (wja != null && wja.length()>0) meishi.tel = wja.getString(0);
+											if (wja != null && wja.length()>0) meishi.tel = wja.getString(0); else meishi.tel="";
 											wja = wjo.getJSONArray("email");
-											if (wja != null && wja.length()>0) meishi.email = wja.getString(0);
+											if (wja != null && wja.length()>0) meishi.email = wja.getString(0); else meishi.email="";
 											printDetail();
 										} catch (Exception e) {
 											Log.d("setOnItemClickListener-meishi-get-tp", wja.toString(), e);
