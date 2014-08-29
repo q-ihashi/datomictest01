@@ -18,9 +18,12 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MeishiDetailActivity extends Activity {
 
@@ -73,6 +76,43 @@ public class MeishiDetailActivity extends Activity {
 						ListView listView = (ListView) findViewById(R.id.listView1);
 						adapter.addAll(hists);
 						listView.setAdapter(adapter);
+						listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+							@Override
+							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+								ListView listView = (ListView) parent;
+								final String item = (String) listView.getItemAtPosition(position);
+//								Toast.makeText(getApplication(), item, Toast.LENGTH_LONG).show();
+								(new Thread(new Runnable() {
+									
+									@Override
+									public void run() {
+										String jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + 
+												"meishi-get-tp?pp1="+meishi.id+"&pp2="+item,null);
+										JSONObject wjo = null;
+										JSONArray wja = null;
+										try {
+											wjo = new JSONObject(jsondata);
+			//								meishi.id = ja.getInt(i);
+											wja = wjo.getJSONArray("title");
+											if (wja != null && wja.length()>0) meishi.title = wja.getString(0);
+											wja = wjo.getJSONArray("company");
+											if (wja != null && wja.length()>0) meishi.company = wja.getString(0);
+											wja = wjo.getJSONArray("name");
+											if (wja != null && wja.length()>0) meishi.name = wja.getString(0);
+											wja = wjo.getJSONArray("addr");
+											if (wja != null && wja.length()>0) meishi.addr = wja.getString(0);
+											wja = wjo.getJSONArray("tel");
+											if (wja != null && wja.length()>0) meishi.tel = wja.getString(0);
+											wja = wjo.getJSONArray("email");
+											if (wja != null && wja.length()>0) meishi.email = wja.getString(0);
+											printDetail();
+										} catch (Exception e) {
+											Log.d("setOnItemClickListener-meishi-get-tp", wja.toString(), e);
+										}
+									}
+								})).start();
+
+						}});
 					}
 				});
 			}
@@ -104,12 +144,17 @@ public class MeishiDetailActivity extends Activity {
 //		String tb = AppConfig.getImageBaseUrl() + "coupon_" + meishi.id + ".jpg";
 //		aq.id(R.id.coupon_detail_image).image(tb, true, true, 0, R.drawable.missing, null, AQuery.FADE_IN_NETWORK, 1.0f);
 
-		aq.id(R.id.txtMeishiTitle).text(meishi.title);
-		aq.id(R.id.txtMeishiCompany).text(meishi.company);
-		aq.id(R.id.txtMeishiName).text(meishi.name);
-		aq.id(R.id.txtMeishiAddress).text(meishi.addr);
-		aq.id(R.id.txtMeishiTel).text(meishi.tel);
-		aq.id(R.id.txtMeishiEmail).text(meishi.email);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				aq.id(R.id.txtMeishiTitle).text(meishi.title);
+				aq.id(R.id.txtMeishiCompany).text(meishi.company);
+				aq.id(R.id.txtMeishiName).text(meishi.name);
+				aq.id(R.id.txtMeishiAddress).text(meishi.addr);
+				aq.id(R.id.txtMeishiTel).text(meishi.tel);
+				aq.id(R.id.txtMeishiEmail).text(meishi.email);
+			}
+		});
 
 //		aq.id(R.id.coupon_detail_expire).text(
 //			new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMANY).format(coupon.expireDate)
