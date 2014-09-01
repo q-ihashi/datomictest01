@@ -119,6 +119,7 @@
   [:db/add 2 :user/name "本名次郎"]
   [:db/add 2 :user/myMeishi 4 ]
   [:db/add 2 :user/myMeishi 5 ]
+  [:db/add 2 :user/hasMeishi 1 ]
   [:db/add 3 :user/name "三郎"]
   [:db/add 3 :user/loginId "logtaro3"]
   [:db/add 2 :user/myMeishi 6 ]
