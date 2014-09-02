@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +44,7 @@ public class MeishiDetailActivity extends Activity {
 		meishi = (MeishiDto)getIntent().getParcelableExtra("MEISHIDETAIL");
 		printDetail();
 
-//		`—š—ğî•ñ‚Ìæ“¾‚ğ‚±‚±‚Ås‚¤`
+//		ï½å±¥æ­´æƒ…å ±ã®å–å¾—ã‚’ã“ã“ã§è¡Œã†ï½
 		(new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -128,7 +127,7 @@ public class MeishiDetailActivity extends Activity {
 	}
 
 	/**
-	 * ƒƒjƒ…[‘I‘ğ
+	 * ãƒ¡ãƒ‹ãƒ¥ãƒ¼é¸æŠæ™‚
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
