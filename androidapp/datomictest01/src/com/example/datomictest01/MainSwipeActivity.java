@@ -63,7 +63,7 @@ public class MainSwipeActivity extends Activity implements ActionBar.TabListener
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager = (ViewPager) findViewById(R.id.pager_main);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
 		mViewPager.setOnPageChangeListener(
@@ -179,10 +179,13 @@ public class MainSwipeActivity extends Activity implements ActionBar.TabListener
 			switch (sectionNumber) {
 			case 0:
 				fragment =new MainSwipeFragment0();
+				break;
 			case 1:
-				fragment =new MainSwipeFragment0();
+				fragment =new MainSwipeFragment1();
+				break;
 			case 2:
-				fragment =new MainSwipeFragment0();
+				fragment =new MainSwipeFragment2();
+				break;
 			}
 			Bundle args = new Bundle();
 			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -192,6 +195,4 @@ public class MainSwipeActivity extends Activity implements ActionBar.TabListener
 
 	}
 
-	//################################
-	//################################
 }

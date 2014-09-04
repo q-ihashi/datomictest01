@@ -10,7 +10,7 @@
     tools:context=".MainSwipeActivity" >
 
     <FrameLayout
-        android:id="@+id/fragment_main_swipe1_frame"
+        android:id="@+id/fragment_main_swipe0_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
     ></FrameLayout>

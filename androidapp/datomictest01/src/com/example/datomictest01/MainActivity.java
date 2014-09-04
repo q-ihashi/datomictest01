@@ -144,7 +144,7 @@ public class MainActivity extends Activity {
 			}
 
 			// Adapterの作成
-			final MeishiAdapter adapter = new MeishiAdapter(getApplication(),R.layout.meishilist,my_meishis);
+			final MeishiAdapter adapter = new MeishiAdapter(getApplication(),R.layout.list_mymeishi_item,my_meishis);
 			// ListViewにAdapterを関連付ける
 			runOnUiThread(new Runnable() {
 				@Override
@@ -205,7 +205,7 @@ public class MainActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			MeishiDto meishiDto = items.get(position);
 			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.meishilist, null);
+				convertView = inflater.inflate(R.layout.list_mymeishi_item, null);
 			}
 			AQuery aq = new AQuery(convertView);
 			aq.id(R.id.txtMeishiTitle).text(meishiDto.title);

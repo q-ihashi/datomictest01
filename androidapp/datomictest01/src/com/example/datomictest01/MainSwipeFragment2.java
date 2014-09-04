@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.androidquery.AQuery;
+import com.example.datomictest01.MainSwipeFragment0.MeishiAdapter;
 import com.example.datomictest01.dto.MeishiDto;
 import com.example.datomictest01.util.HttpUtil;
 import com.example.datomictest01.util.TaskCallback;
@@ -35,64 +36,58 @@ import android.widget.TextView;
  * @author ihashi
  *
  */
-public class MainSwipeFragment0 extends Fragment {
+public class MainSwipeFragment2 extends Fragment {
 
-	View rootView =null;
-
-//	private List<MeishiDto> my_meishis = new ArrayList<MeishiDto>();
+	private List<MeishiDto> my_meishis = new ArrayList<MeishiDto>();
 //	private List<MeishiDto> has_meishis = new ArrayList<MeishiDto>();
 //	private List<MeishiDto> who_meishis = new ArrayList<MeishiDto>();
 
 	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.fragment_main_swipe2,
+				container, false);
+		my_meishis.clear();
+//		AsyncTask t = new MeishiGetTask(new MeishiGetTaskCallback());
+//		t.execute(new String[] {MainSwipeActivity.pref_userId});
+
+		return rootView;
+	}
+	@Override
 	public void onResume() {
 		super.onResume();
 //		final Activity act = getActivity();
-//		if (my_meishis.size() == 0) {
+//		if (my_meishis.size() != 0) {
 //			AsyncTask t = new MeishiGetTask(new MeishiGetTaskCallback());
 //			t.execute(new String[] {MainSwipeActivity.pref_userId});
 //		}
 	}
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.fragment_main_swipe0,
-				container, false);
-//		my_meishis.clear();
-//		AsyncTask t = new MeishiGetTask(new MeishiGetTaskCallback());
-		AsyncTask t = new MeishiGetTask();
-		t.execute(new String[] {MainSwipeActivity.pref_userId});
-
-		return rootView;
-	}
 	public void updateView() {
 		onResume();
 	}
-	class MeishiGetTask extends AsyncTask<String, Integer,  List<MeishiDto>> {
+	class MeishiGetTask extends AsyncTask<String, Integer,  String> {
 
-		TaskCallback<MeishiDto> callback;
+		TaskCallback<String> callback;
 		boolean flagEnd = false;
 
-//		public MeishiGetTask(TaskCallback<MeishiDto> callback) {
-		public MeishiGetTask() {
+		public MeishiGetTask(TaskCallback<String> callback) {
 			super();
-//			this.callback = callback;
+			this.callback = callback;
 		}
 
 		@Override
-		protected void onPostExecute(List<MeishiDto> result) {
+		protected void onPostExecute(String result) {
 			if (flagEnd) {
-				setViewMeishiList(result);
-//				callback.onSuccess(result);
+				callback.onSuccess(result);
 			} else {
-//				callback.onFailure("error/onPostExecute,flagEnd=false");
+				callback.onFailure(result);
 			}
 		}
 
 		@Override
-		protected List<MeishiDto> doInBackground(String... params) {
+		protected String doInBackground(String... params) {
 //			Map param = new HashMap<String, String>();
 //			param.put("pp1", params[0]);
-			List<MeishiDto> meishis = new ArrayList<MeishiDto>();
 			String jsondata = null;
 			JSONObject jo = null;
 			JSONArray ja = null;
@@ -115,32 +110,32 @@ public class MainSwipeFragment0 extends Fragment {
 					md.addr = jo.getJSONArray("addr").getString(0);
 					md.tel = jo.getJSONArray("tel").getString(0);
 					md.email = jo.getJSONArray("email").getString(0);
-					meishis.add(md);
+					my_meishis.add(md);
 				}
 			} catch (Exception e) {
 				Log.d("doInBackground", e.toString());
-				return meishis; //e.toString();
+				return e.toString();
 			}
 
 			flagEnd = true;
-			return meishis;
+			return ret;
 		}
 
 	}
 	//################################
-	class MeishiGetTaskCallback implements TaskCallback<MeishiDto> {
+	class MeishiGetTaskCallback implements TaskCallback<String> {
 
 		@Override
-		public void onSuccess(List<MeishiDto> list) {
-			setViewMeishiList(list);
+		public void onSuccess(List<String> list) {
 		}
 
 		@Override
-		public void onSuccess(List<MeishiDto> list, boolean more) {}
+		public void onSuccess(List<String> list, boolean more) {}
 
 		@Override
-		public void onSuccess(final MeishiDto data) {
+		public void onSuccess(final String jsondata) {
 //			tvMsg.setText("END."+jsondata);
+			setViewMeishiList(my_meishis);
 		}
 
 		@Override
@@ -152,25 +147,14 @@ public class MainSwipeFragment0 extends Fragment {
 	public void setViewMeishiList(List<MeishiDto> meishis) {
 //		final View mViewPager = (ViewPager) .findViewById(R.id.pager);
 		final Activity act = getActivity();
-		final FrameLayout f = (FrameLayout)act.findViewById(R.id.fragment_main_swipe0_frame);
-		View meishiListView = new ListView(act);
-		if(f != null){
-			f.removeAllViews();
-//			meishiListView = new View(f.getContext(), null, R.layout.list_mymeishi);
-			f.addView(meishiListView);
-		}else{
-			Log.d(this.getClass().getName(), "Fragment is null."); // TODO prevent to be crashed
-		}
-		final MeishiAdapter adapter = new MeishiAdapter(act, R.layout.list_mymeishi_item, meishis);
-		final View v = meishiListView;
+		final FrameLayout f = (FrameLayout)act.findViewById(R.id.fragment_main_swipe2_frame);
+		final MeishiAdapter adapter = new MeishiAdapter(act,R.layout.list_mymeishi_item,my_meishis);
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-//				if (rootView == null) return;
-//				TextView tx = (TextView)v.findViewById(R.id.textView);
-//				if (tx != null) tx.setText(tx.getText().toString());
-//				ListView listView = (ListView)v.findViewById(R.id.listView);
-				ListView listView = (ListView)v;
+				TextView tx = (TextView)f.findViewById(R.id.textView);
+				if (tx != null) tx.setText(tx.getText().toString());
+				ListView listView = (ListView)f.findViewById(R.id.listView);
 				if (listView == null) return;
 				listView.setAdapter(adapter);
 				listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
