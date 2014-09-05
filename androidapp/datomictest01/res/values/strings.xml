@@ -21,4 +21,7 @@
     <string name="title_section1">MY</string>
     <string name="title_section2">HAS</string>
     <string name="title_section3">WHO</string>
+    <string name="title_head_section1">My名刺</string>
+    <string name="title_head_section2">Has名刺</string>
+    <string name="title_head_section3">だれ？</string>
 </resources>
