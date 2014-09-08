@@ -7,12 +7,14 @@ import java.util.List;
 
 import com.example.datomictest01.adapter.MeishiAdapter;
 import com.example.datomictest01.dto.MeishiDto;
+import com.example.datomictest01.dto.UserDto;
 import com.example.datomictest01.task.MeishiGetTask;
 import com.example.datomictest01.util.TaskCallback;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author ihashi
@@ -35,11 +38,6 @@ public class MainSwipeFragment2 extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-//		final Activity act = getActivity();
-//		if (my_meishis.size() == 0) {
-//			AsyncTask t = new MeishiGetTask(new MeishiGetTaskCallback());
-//			t.execute(new String[] {MainSwipeActivity.pref_userId});
-//		}
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,8 +45,8 @@ public class MainSwipeFragment2 extends Fragment {
 		rootView = inflater.inflate(R.layout.fragment_main_swipe2,
 				container, false);
 //		my_meishis.clear();
-		AsyncTask<String, Integer,  List<MeishiDto>> t = new MeishiGetTask(new MeishiGetTaskCallback());
-		t.execute(new String[] {"myMeishi", MainSwipeActivity.pref_userId});
+//		AsyncTask<String, Integer,  List<MeishiDto>> t = new MeishiGetTask(new MeishiGetTaskCallback());
+//		t.execute(new String[] {""+MainSwipeActivity.userDto.id});
 
 		return rootView;
 	}

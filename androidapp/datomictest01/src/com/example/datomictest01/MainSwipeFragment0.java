@@ -32,18 +32,9 @@ public class MainSwipeFragment0 extends Fragment {
 
 	View rootView =null;
 
-//	private List<MeishiDto> my_meishis = new ArrayList<MeishiDto>();
-//	private List<MeishiDto> has_meishis = new ArrayList<MeishiDto>();
-//	private List<MeishiDto> who_meishis = new ArrayList<MeishiDto>();
-
 	@Override
 	public void onResume() {
 		super.onResume();
-//		final Activity act = getActivity();
-//		if (my_meishis.size() == 0) {
-//			AsyncTask t = new MeishiGetTask(new MeishiGetTaskCallback());
-//			t.execute(new String[] {MainSwipeActivity.pref_userId});
-//		}
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +43,7 @@ public class MainSwipeFragment0 extends Fragment {
 				container, false);
 //		my_meishis.clear();
 		AsyncTask<String, Integer,  List<MeishiDto>> t = new MeishiGetTask(new MeishiGetTaskCallback());
-		t.execute(new String[] {"myMeishi", MainSwipeActivity.pref_userId});
+		t.execute(new String[] {"myMeishi", ""+MainSwipeActivity.userDto.id});
 
 		return rootView;
 	}

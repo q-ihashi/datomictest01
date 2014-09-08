@@ -1,19 +1,10 @@
 package com.example.datomictest01;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.androidquery.AQuery;
-import com.androidquery.util.AQUtility;
-import com.example.datomictest01.dto.MeishiDto;
-import com.example.datomictest01.util.HttpUtil;
+import com.example.datomictest01.dto.UserDto;
+import com.example.datomictest01.task.UserGetTask;
 import com.example.datomictest01.util.TaskCallback;
 
 import android.os.AsyncTask;
@@ -25,27 +16,19 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainSwipeActivity extends Activity implements ActionBar.TabListener {
 
 	private SharedPreferences sharedPref;
 	static String pref_userId = "";
+	static UserDto userDto = null;
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ActionBar actionBar = null;
@@ -58,38 +41,15 @@ public class MainSwipeActivity extends Activity implements ActionBar.TabListener
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager_main);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-
-		mViewPager.setOnPageChangeListener(
-			new ViewPager.SimpleOnPageChangeListener() {
-				@Override
-				public void onPageSelected(int position) {
-					actionBar.setSelectedNavigationItem(position);
-					//updateMainFragAct0(); //Newsfeedは毎回更新したいかも．
-				}
-		});
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			actionBar.addTab(actionBar.newTab()
-					.setText(mSectionsPagerAdapter.getPageTitle(i))
-					.setTabListener(this));
-		}
 		
 		//設定情報読み込み
 		AppConfig.getPreferenceData(this);
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		pref_userId = sharedPref.getString("pref_userId", "1");
 
-//		TextView tvMsg = null;
-//		tvMsg = (TextView)findViewById(R.id.tvMsg);
-//		tvMsg.setText("GET Start.");
+		AsyncTask<String, Integer,  UserDto> t = new UserGetTask(new UserGetTaskCallback());
+		t.execute(new String[] {MainSwipeActivity.pref_userId});
 
-//		List<Map<String,String>> datas = createViewData();
 	}
 
 	@Override
@@ -192,6 +152,50 @@ public class MainSwipeActivity extends Activity implements ActionBar.TabListener
 			fragment.setArguments(args);
 			return fragment;
 		}
+
+	}
+	//################################
+	class UserGetTaskCallback implements TaskCallback<UserDto> {
+		@Override
+		public void onSuccess(final UserDto data) {
+			userDto = data;
+			// Create the adapter that will return a fragment for each of the three
+			// primary sections of the activity.
+			mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+
+			// Set up the ViewPager with the sections adapter.
+			mViewPager = (ViewPager) findViewById(R.id.pager_main);
+			mViewPager.setAdapter(mSectionsPagerAdapter);
+
+			mViewPager.setOnPageChangeListener(
+				new ViewPager.SimpleOnPageChangeListener() {
+					@Override
+					public void onPageSelected(int position) {
+						actionBar.setSelectedNavigationItem(position);
+						//updateMainFragAct0(); //Newsfeedは毎回更新したいかも．
+					}
+			});
+			for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+				actionBar.addTab(actionBar.newTab()
+						.setText(mSectionsPagerAdapter.getPageTitle(i))
+						.setTabListener(MainSwipeActivity.this));
+			}
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(getApplicationContext(), data.name.toString(), Toast.LENGTH_LONG).show();
+				}
+			});
+
+		}
+		@Override
+		public void onFailure(final String errmsg) {
+//			tvMsg.setText("ERR."+errmsg);
+		}
+		@Override
+		public void onSuccess(List<UserDto> list) {}
+		@Override
+		public void onSuccess(List<UserDto> list, boolean more) {}
 
 	}
 
