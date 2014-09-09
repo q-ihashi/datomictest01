@@ -129,6 +129,19 @@
                          )
              }))
   )
+  (GET "/meishi-who-p" [pp1]
+       (let [pp1long (Long/parseLong pp1)]
+           (json/write-str
+             {:data   (q '[:find ?hasuid ?hasname ?hasmeishi ?meishiname ?uid ?name
+                           :in $ ?uid
+                             :where
+                               [?hasmeishi :meishi/name ?meishiname]
+                               [?uid :user/name ?name]
+                               [?uid :user/myMeishi ?hasmeishi]
+                               [?hasuid :user/hasMeishi ?hasmeishi]
+                               [?hasuid :user/name ?hasname]] (get-db conn) pp1long)
+              }))
+  )
 
 
   (GET "/meishi-get-ptx" [pp1 pp2]
