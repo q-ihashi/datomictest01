@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txtUserName"
+            android:textSize="18sp"
+            android:background="#606060"
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="HAS USER NAME"
+        >
+        </TextView>
+        <TextView
+            android:id="@+id/txtMeishiName"
+            android:textSize="14sp"
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="MEISHI NAME"
+        >
+        </TextView>
+        <TextView
+            android:id="@+id/txtBiko"
+            android:textSize="14sp"
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text=""
+        >
+        </TextView>
+        </LinearLayout>
+</LinearLayout>

@@ -38,8 +38,7 @@ public class MeishiWhoGetTask extends AsyncTask<String, Integer,  List<UserDto>>
 
 	/**
 	 * 名刺データ取得
-	 * param params[0]:取得元指定/ "myMeishi" ユーザの名刺, "hasMeishi" 他からもらった名刺
-	 * param params[1]:ユーザ番号/ 1～
+	 * param params[0]:ユーザ番号/ 1～
 	 */
 	@Override
 	protected List<UserDto> doInBackground(String... params) {
@@ -50,32 +49,31 @@ public class MeishiWhoGetTask extends AsyncTask<String, Integer,  List<UserDto>>
 		JSONObject jo = null;
 		JSONArray ja = null;
 		String ret = "";
-		String datacol = params[0];
-		String pp1 = params[1];
-//		try {
-//			jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "user-get-p?pp1="+pp1,null);
-//			jo = new JSONObject(jsondata);
+		String datacol = "data";
+		String pp1 = params[0];
+		try {
+			jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "meishi-who-p?pp1="+pp1,null);
+			jo = new JSONObject(jsondata);
 ////このあたりはAPI変更して簡易になるようにしたいが．．．いったんこのまま
-//			ja = jo.getJSONArray(datacol);
-//			int count = ja.length();
-//			for (int i=0 ; i < count; i++) {
-//				ret = ret + "," + ja.getInt(i);
-//				jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "meishi-get-p?pp1="+ja.getInt(i),null);
-//				jo = new JSONObject(jsondata);
-//				UserDto ud = new UserDto();
-//				ud.id = ja.getInt(i);
-//				ud.title = jo.getJSONArray("title").getString(0);
-//				ud.company = jo.getJSONArray("company").getString(0);
-//				ud.name = jo.getJSONArray("name").getString(0);
-//				ud.addr = jo.getJSONArray("addr").getString(0);
-//				ud.tel = jo.getJSONArray("tel").getString(0);
-//				ud.email = jo.getJSONArray("email").getString(0);
-//				users.add(ud);
-//			}
-//		} catch (Exception e) {
-//			Log.d("doInBackground", e.toString());
-//			return meishis; //e.toString();
-//		}
+			ja = jo.getJSONArray(datacol);
+			int count = ja.length();
+			for (int i=0 ; i < count; i++) {
+				UserDto wu = new UserDto();
+				JSONArray wa = ja.getJSONArray(i);
+				wu.id = wa.getInt(0);
+				wu.name = wa.getString(1);
+				MeishiDto wm = new MeishiDto();
+				wm.id = wa.getInt(2);
+				wm.name = wa.getString(3);
+				wm.user.id = wa.getInt(4);
+				wm.user.name = wa.getString(5);
+				wu.hasMeishi.add(wm);
+				users.add(wu);
+			}
+		} catch (Exception e) {
+			Log.d("doInBackground/meishis", e.toString());
+			return users; //e.toString();
+		}
 
 		flagEnd = true;
 		return users;

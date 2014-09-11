@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.datomictest01.AppConfig;
+import com.example.datomictest01.dto.MeishiDto;
 import com.example.datomictest01.dto.UserDto;
 import com.example.datomictest01.util.HttpUtil;
 import com.example.datomictest01.util.TaskCallback;
@@ -54,12 +55,16 @@ public class UserGetTask extends AsyncTask<String, Integer,  UserDto> {
 			ja = jo.getJSONArray("myMeishi");
 			int count = ja.length();
 			for (int i=0; i < count; i++) {
-				userDto.myMeishi.add(ja.getLong(i));
+				MeishiDto wm = new MeishiDto();
+				wm.id = ja.getInt(i);
+				userDto.myMeishi.add(wm);
 			}
 			ja = jo.getJSONArray("hasMeishi");
 			count = ja.length();
 			for (int i=0; i < count; i++) {
-				userDto.hasMeishi.add(ja.getLong(i));
+				MeishiDto wm = new MeishiDto();
+				wm.id = ja.getInt(i);
+				userDto.hasMeishi.add(wm);
 			}
 					
 		} catch (Exception e) {

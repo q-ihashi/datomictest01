@@ -10,11 +10,11 @@ import android.os.Parcelable;
 public class UserDto implements Parcelable {
 	public UserDto() {}
 
-	public Integer id;
+	public Integer id = new Integer(0);
 	public String loginId;
 	public String name;
-	public List<Long> myMeishi = new ArrayList<Long>();
-	public List<Long> hasMeishi = new ArrayList<Long>();
+	public List<MeishiDto> myMeishi = new ArrayList<MeishiDto>();
+	public List<MeishiDto> hasMeishi = new ArrayList<MeishiDto>();
 
 	public static final Parcelable.Creator<UserDto> CREATOR =
 			new Parcelable.Creator<UserDto>() {
@@ -37,22 +37,20 @@ public class UserDto implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel arg0, int arg1) {
 		arg0.writeInt(id);
-		arg0.writeString(loginId);
-		arg0.writeString(name);
+		if (loginId != null) arg0.writeString(loginId); else arg0.writeString("");
+		if (name != null) arg0.writeString(name); else arg0.writeString("");
 		arg0.writeList(myMeishi);
 		arg0.writeList(hasMeishi);
 	}
 
 	private UserDto(Parcel in) {
-		id      = in.readInt();
+		id        = in.readInt();
 		loginId   = in.readString();
-		name    = in.readString();
+		name      = in.readString();
 		myMeishi.clear();
 		in.readList(myMeishi,null);
 		hasMeishi.clear();
 		in.readList(hasMeishi,null);
-		
-
 	}
 
 }
