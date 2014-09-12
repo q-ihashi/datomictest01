@@ -15,6 +15,7 @@
     <string name="title_pref_apibaseurl">API BaseURL</string>
     <string name="title_pref_imgbaseurl">IMAGE BaseURL</string>
     <string name="title_activity_meishi_detail">MeishiDetailActivity</string>
+    <string name="title_activity_new_detail">MeishiNewActivity</string>
     <string name="title_activity_meishi_list">MeishiListActivity</string>
     <string name="title_activity_main_swipe">MainSwipeActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

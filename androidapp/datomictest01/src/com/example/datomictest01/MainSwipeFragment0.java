@@ -18,17 +18,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author ihashi
  *
  */
-public class MainSwipeFragment0 extends Fragment {
+public class MainSwipeFragment0 extends Fragment implements OnClickListener {
 
 	View rootView =null;
 
@@ -80,6 +83,11 @@ public class MainSwipeFragment0 extends Fragment {
 			@Override
 			public void run() {
 //				if (rootView == null) return;
+				Button btnTop = (Button)v.findViewById(R.id.btnTop);
+				btnTop.setOnClickListener(MainSwipeFragment0.this);
+				btnTop.setText("Add..");
+				btnTop.setVisibility(Button.VISIBLE);
+				
 				TextView tx = (TextView)v.findViewById(R.id.textView);
 				if (tx != null) tx.setText(getString(R.string.title_head_section1));
 				ListView listView = (ListView)v.findViewById(R.id.listView);
@@ -91,7 +99,7 @@ public class MainSwipeFragment0 extends Fragment {
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 						MeishiAdapter headerViewListAdapter = (MeishiAdapter) parent.getAdapter();
 						MeishiDto meishi = (MeishiDto) headerViewListAdapter.getItem(position);
-						//Coupon詳細画面へ
+						//Meishi詳細画面へ
 						Intent intent = new Intent(getActivity().getApplicationContext(), MeishiDetailActivity.class);
 						intent.putExtra("MEISHIDETAIL", meishi);
 						startActivity(intent);
@@ -99,5 +107,20 @@ public class MainSwipeFragment0 extends Fragment {
 				});
 			}
 		});
+	}
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btnTop:
+//			Toast.makeText(getActivity(), "New MEISHI", Toast.LENGTH_LONG).show();
+			//名刺追加画面へ
+			Intent intent = new Intent(getActivity().getApplicationContext(), MeishiNewActivity.class);
+			startActivity(intent);
+			break;
+		default:
+			Toast.makeText(getActivity(), "default:"+v.getId(), Toast.LENGTH_LONG).show();
+			break;
+		}
+		
 	}
 }

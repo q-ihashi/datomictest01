@@ -38,6 +38,10 @@
             android:name=".MeishiDetailActivity"
             android:label="@string/title_activity_meishi_detail" >
         </activity>
-    </application>
+        <activity
+            android:name=".MeishiNewActivity"
+            android:label="@string/title_activity_new_detail" >
+        </activity>
+        </application>
 
 </manifest>
