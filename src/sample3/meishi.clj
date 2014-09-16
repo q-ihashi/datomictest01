@@ -147,4 +147,6 @@
   [:db/add 6 :meishi/tel "03-9999-9996"]
   [:db/add 6 :meishi/email "saburo@meishi-email6.tst"]
   ]
-)
+  )
+
+

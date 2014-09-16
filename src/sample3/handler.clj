@@ -81,6 +81,7 @@
                 :hasMeishi (map first (q '[:find ?v :in $ ?p :where [?p :user/hasMeishi ?v]] (get-db conn) pp1long)),
                }))
   )
+  ;;名刺詳細取得(最新)
   (GET "/meishi-get-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
@@ -92,7 +93,7 @@
                 :email   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/email ?v]] (get-db conn) pp1long)),
                }))
   )
-  ;指定時刻時点の情報取得
+  ;指定時刻時点の名刺詳取得
   (GET "/meishi-get-tp" [pp1 pp2]
        (let [pp1long (Long/parseLong pp1)
              pp2long (Long/parseLong pp2)
@@ -129,6 +130,7 @@
                          )
              }))
   )
+  ;;自分の名刺を持っている人リスト
   (GET "/meishi-who-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
@@ -143,7 +145,7 @@
               }))
   )
 
-
+  ;;指定のトランザクション番号における値を取得
   (GET "/meishi-get-ptx" [pp1 pp2]
        (let [pp1long (Long/parseLong pp1)
              pp2long (Long/parseLong pp2)
@@ -157,12 +159,34 @@
                 :email   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/email ?v ?tx]] (get-db conn) pp1long pp2long)),
                }))
   )
-  (GET "/meishi-tx-p" [pp1]
-       (let [pp1long (Long/parseLong pp1)]
-           (json/write-str
-             {:txInstant (sort (map c/to-long (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n ?when]] (get-db conn) pp1long))))
-             }))
+  ;;名刺を持っていればそのmid，なければnil
+  (def existUserMeishi [pp1 pp2]
+    (let [pp1long (Long/parseLong pp1)
+          pp2long (Long/parseLong pp2)]
+        (first (d/q '[:find ?mymeishi :in $ ?uid ?mymeishi :where [?uid :user/myMeishi ?mymeishi]] (get-db conn) pp1long pp2long))
+        )
   )
+  (GET "/meishi-exist-p" [pp1 pp2]
+      (let [flg (existUserMeishi pp1 pp2)]
+           (json/write-str {:exist (not= flg nil)}
+      ))
+  )
+  (GET "/hasmeishi-add-p" [pp1 pp2]
+       (let [pp1long (Long/parseLong pp1)
+             pp2long (Long/parseLong pp2)
+             ret (d/transact conn '[:in $ ?uid ?mid [:db/add ?uid :user/hasMeishi ?mid]] pp1long pp2long)
+             ]
+           (json/write-str
+               {:result true}))
+  )
+  ;;指定エンティティの更新トランザクション番号リスト
+  (GET "/meishi-tx-p" [pp1]
+      (let [pp1long (Long/parseLong pp1)]
+           (json/write-str
+            {:txInstant (sort (map c/to-long (map first (q '[:find ?when :in $ ?p :where [?p :meishi/name ?n ?when]] (get-db conn) pp1long))))
+            }))
+  )
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;履歴オブジェクト取得
   (GET "/test_hist1" [pp1]
        (let [pp1long (Long/parseLong pp1)]
