@@ -175,7 +175,7 @@
   (GET "/hasmeishi-add-p" [pp1 pp2]
        (let [pp1long (Long/parseLong pp1)
              pp2long (Long/parseLong pp2)
-             ret (d/transact conn '[:in $ ?uid ?mid [:db/add ?uid :user/hasMeishi ?mid]] pp1long pp2long)
+             ret (d/transact conn [[:db/add pp1long :user/hasMeishi pp2long]]  )
              ]
            (json/write-str
                {:result true}))
