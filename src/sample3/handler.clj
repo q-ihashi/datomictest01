@@ -164,7 +164,7 @@
     (let [pp1long (Long/parseLong pp1)
           pp2long (Long/parseLong pp2)]
         (first (q '[:find ?mymeishi :in $ ?uid ?mymeishi :where [?uid :user/myMeishi ?mymeishi]] (get-db conn) pp1long pp2long))
-        )
+    )
   )
   (GET "/meishi-exist-p" [pp1 pp2]
       (let [flg (existUserMeishi pp1 pp2)]
