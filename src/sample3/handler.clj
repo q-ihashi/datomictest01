@@ -69,6 +69,13 @@
 (def built-in-formatter  (f/formatters :basic-date-time))
 (def custom-formatter    (f/formatter "yyyyMMdd"))
 (defn custom-unparse [d] (f/unparse custom-formatter d))
+;;名刺を持っていればそのmid，なければnil
+(defn existUserMeishi [pp1 pp2]
+  (let [pp1long (Long/parseLong pp1)
+        pp2long (Long/parseLong pp2)]
+      (first (q '[:find ?mymeishi :in $ ?uid ?mymeishi :where [?uid :user/myMeishi ?mymeishi]] (get-db conn) pp1long pp2long))
+  )
+)
 
 (defroutes app-routes
   (GET "/datomicschemainit" [] (str (d/transact conn meishi/meishi-schema)))
@@ -160,12 +167,6 @@
                }))
   )
   ;;名刺を持っていればそのmid，なければnil
-  (defn existUserMeishi [pp1 pp2]
-    (let [pp1long (Long/parseLong pp1)
-          pp2long (Long/parseLong pp2)]
-        (first (q '[:find ?mymeishi :in $ ?uid ?mymeishi :where [?uid :user/myMeishi ?mymeishi]] (get-db conn) pp1long pp2long))
-    )
-  )
   (GET "/meishi-exist-p" [pp1 pp2]
       (let [flg (existUserMeishi pp1 pp2)]
            (json/write-str {:exist (not= flg nil)}
