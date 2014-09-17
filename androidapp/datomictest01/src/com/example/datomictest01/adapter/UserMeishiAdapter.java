@@ -31,8 +31,8 @@ public class UserMeishiAdapter extends ArrayAdapter<UserDto> {
 			convertView = inflater.inflate(R.layout.list_usermeishi_item, null);
 		}
 		AQuery aq = new AQuery(convertView);
-		aq.id(R.id.txtMeishiName).text(userDto.hasMeishi.get(0).name);
-		aq.id(R.id.txtUserName).text(userDto.name);
+		aq.id(R.id.txtMeishiName).text(userDto.hasMeishi.get(0).id + ":" + userDto.hasMeishi.get(0).name);
+		aq.id(R.id.txtUserName).text(userDto.id + ":" + userDto.name);
 //		aq.id(R.id.list_newsfeed_time).text(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMANY).format(newsfeed.time));
 
 //		String tb = AppConfig.getImageNewsfeedBaseUrl() + newsfeed.user.id + ".jpg";

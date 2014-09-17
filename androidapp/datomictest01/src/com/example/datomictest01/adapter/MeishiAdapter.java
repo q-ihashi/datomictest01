@@ -30,7 +30,7 @@ public class MeishiAdapter extends ArrayAdapter<MeishiDto> {
 			convertView = inflater.inflate(R.layout.list_mymeishi_item, null);
 		}
 		AQuery aq = new AQuery(convertView);
-		aq.id(R.id.txtMeishiTitle).text(meishiDto.title);
+		aq.id(R.id.txtMeishiTitle).text(meishiDto.id+":" + meishiDto.title);
 		aq.id(R.id.txtMeishiCompany).text(meishiDto.company);
 		aq.id(R.id.txtMeishiName).text(meishiDto.name);
 		aq.id(R.id.txtMeishiAddress).text(meishiDto.addr);

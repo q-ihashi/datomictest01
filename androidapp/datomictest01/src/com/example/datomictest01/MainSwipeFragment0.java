@@ -5,13 +5,19 @@ package com.example.datomictest01;
 
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.example.datomictest01.adapter.MeishiAdapter;
 import com.example.datomictest01.dto.MeishiDto;
 import com.example.datomictest01.task.MeishiGetTask;
+import com.example.datomictest01.util.HttpUtil;
 import com.example.datomictest01.util.TaskCallback;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -105,8 +112,64 @@ public class MainSwipeFragment0 extends Fragment implements OnClickListener {
 						startActivity(intent);
 					}
 				});
+				listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View view, int position, long id) {
+						final MeishiDto item = (MeishiDto) parent.getItemAtPosition(position);
+						//テキスト入力を受け付けるビューを作成します。
+						final EditText editView = new EditText(getActivity());
+						new AlertDialog.Builder(getActivity())
+							.setIcon(android.R.drawable.ic_dialog_info)
+							.setTitle(item.title+"を誰に渡しますか？")
+							//setViewにてビューを設定します。
+							.setView(editView)
+							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int whichButton) {
+									//入力した文字をトースト出力する
+									Toast.makeText(getActivity(), 
+											editView.getText().toString(), 
+											Toast.LENGTH_LONG).show();
+									if (editView.getText().toString().length()>0) {
+										sendMeishi(item, Integer.parseInt(editView.getText().toString()));
+									}
+								}
+							})
+							.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int whichButton) {
+								}
+							})
+							.show();
+						return true;
+					}
+				});
 			}
 		});
+	}
+	public boolean sendMeishi(MeishiDto meishi, int toUid) {
+		Toast.makeText(getActivity(), 
+				"SendMeishi!", 
+				Toast.LENGTH_LONG).show();
+//		String jsondata = null;
+		JSONObject jo = null;
+		JSONArray ja = null;
+		String ret = "";
+		final String pp1 = String.valueOf(toUid);
+		final String pp2 = String.valueOf(meishi.id);
+		(new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+//					jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "meishi-exist-p?pp1="+pp1+"&pp2="+pp2,null);
+					String jsondata = HttpUtil.getContentBySendJson(AppConfig.getApiBaseUrl() + "hasmeishi-add-p?pp1="+pp1+"&pp2="+pp2,null);
+				} catch (Exception e) {
+					Log.d("sendMeishi", e.toString());
+//					return false
+				}
+			}
+		})).start();
+		return true;
 	}
 	@Override
 	public void onClick(View v) {

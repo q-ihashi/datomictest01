@@ -146,7 +146,7 @@ public class MeishiDetailActivity extends Activity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				aq.id(R.id.txtMeishiTitle).text(meishi.title);
+				aq.id(R.id.txtMeishiTitle).text(meishi.id + ":" + meishi.title);
 				aq.id(R.id.txtMeishiCompany).text(meishi.company);
 				aq.id(R.id.txtMeishiName).text(meishi.name);
 				aq.id(R.id.txtMeishiAddress).text(meishi.addr);

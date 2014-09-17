@@ -5,13 +5,19 @@ package com.example.datomictest01;
 
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.example.datomictest01.adapter.MeishiAdapter;
 import com.example.datomictest01.dto.MeishiDto;
 import com.example.datomictest01.task.MeishiGetTask;
+import com.example.datomictest01.util.HttpUtil;
 import com.example.datomictest01.util.TaskCallback;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,9 +26,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author ihashi
