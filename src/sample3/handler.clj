@@ -83,7 +83,8 @@
   (GET "/user-get-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-               {:uname (map first (q '[:find ?v :in $ ?p :where [?p :user/name ?v ]]   (get-db conn) pp1long)),
+               {:id pp1long
+                :uname (map first (q '[:find ?v :in $ ?p :where [?p :user/name ?v ]]   (get-db conn) pp1long)),
                 :myMeishi  (map first (q '[:find ?v :in $ ?p :where [?p :user/myMeishi ?v]] (get-db conn) pp1long)),
                 :hasMeishi (map first (q '[:find ?v :in $ ?p :where [?p :user/hasMeishi ?v]] (get-db conn) pp1long)),
                }))
@@ -92,7 +93,8 @@
   (GET "/meishi-get-p" [pp1]
        (let [pp1long (Long/parseLong pp1)]
            (json/write-str
-               {:title   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]] (get-db conn) pp1long)),
+               {:id pp1long
+                :title   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]] (get-db conn) pp1long)),
                 :company (map first (q '[:find ?v :in $ ?p :where [?p :meishi/company ?v]]  (get-db conn) pp1long)),
                 :name    (map first (q '[:find ?v :in $ ?p :where [?p :meishi/name ?v]]  (get-db conn) pp1long)),
                 :addr    (map first (q '[:find ?v :in $ ?p :where [?p :meishi/addr ?v]]  (get-db conn) pp1long)),
@@ -107,7 +109,8 @@
              olddb   (d/as-of (get-db conn) pp2long)
              ]
            (json/write-str
-               {:title   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]] olddb pp1long)),
+               {:id pp1long
+                :title   (map first (q '[:find ?v :in $ ?p :where [?p :meishi/title ?v]] olddb pp1long)),
                 :company (map first (q '[:find ?v :in $ ?p :where [?p :meishi/company ?v]]  olddb pp1long)),
                 :name    (map first (q '[:find ?v :in $ ?p :where [?p :meishi/name ?v]]  olddb pp1long)),
                 :addr    (map first (q '[:find ?v :in $ ?p :where [?p :meishi/addr ?v]]  olddb pp1long)),
@@ -158,7 +161,8 @@
              pp2long (Long/parseLong pp2)
              ]
            (json/write-str
-               {:title   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/title ?v ?tx]] (get-db conn) pp1long pp2long)),
+               {:id pp1long
+                :title   (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/title ?v ?tx]] (get-db conn) pp1long pp2long)),
                 :company (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/company ?v ?tx]]  (get-db conn) pp1long pp2long)),
                 :name    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/name ?v ?tx]]  (get-db conn) pp1long pp2long)),
                 :addr    (map first (q '[:find ?v :in $ ?p ?tx :where [?p :meishi/addr ?v ?tx]]  (get-db conn) pp1long pp2long)),
